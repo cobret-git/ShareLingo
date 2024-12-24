@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using ShareLingo.Core.Services;
 using ShareLingo.Core.ViewModel.Component;
 using System.Collections.ObjectModel;
+using msg = ShareLingo.Core.Resources.Messages;
 
 namespace ShareLingo.Core.ViewModel
 {
@@ -14,6 +15,17 @@ namespace ShareLingo.Core.ViewModel
         private readonly IContentManager contentManager;
         #endregion
 
+        #region Constructors
+        public CourseBrowserViewModel(ILoggerManager loggerManager, 
+            IDataManager dataManager,
+            IContentManager contentManager)
+        {
+            this.loggerManager = loggerManager;
+            this.dataManager = dataManager;
+            this.contentManager = contentManager;
+        }
+        #endregion
+
         #region Properties
         public ObservableCollection<CourseContainerViewModel> Items { get; } = new();
         #endregion
@@ -23,7 +35,18 @@ namespace ShareLingo.Core.ViewModel
         {
             try
             {
-                var confirm = 
+
+                var validator = dataManager.GetCourseNameValidator();
+                var prompt = await contentManager.ShowPrompt(msg.courseBrowser_enterCourseNamePrompt, null);
+                if (prompt.Result != DialogResult.Ok || !validator.IsValid(prompt.Prompt)) return;
+                if (dataManager.GetContaienrs(0, int.MaxValue).Any(x => x.Name == prompt.Prompt))
+                    await contentManager.ShowError(msg.courseBrowser_enteredCourseNameAlreadyInUseError);
+                else
+                {
+                    var course = dataManager.CreateCourse(prompt.Prompt);
+                    Items.Add(course);
+                    contentManager.InspectCourse(course);
+                }
             }
             catch (Exception ex) { loggerManager.Debug(ex); }
         }
@@ -31,15 +54,22 @@ namespace ShareLingo.Core.ViewModel
         {
             try
             {
-
+                if (item == null) return;
+                contentManager.InspectCourse(item);
             }
             catch (Exception ex) { loggerManager.Debug(ex); }
         }
-        [RelayCommand] private void DeleteCourse(CourseContainerViewModel? item)
+        [RelayCommand] private async Task DeleteCourse(CourseContainerViewModel? item)
         {
             try
             {
-
+                if (item == null) return;
+                var confirm = await contentManager.ShowConfirm(msg.courseBrowser_deleteSelectedCourseConfirm, DialogButtons.YesNo);
+                if (confirm.Result != DialogResult.Yes)
+                {
+                    dataManager.DeleteCourse(item);
+                    Items.Remove(item);
+                }
             }
             catch (Exception ex) { loggerManager.Debug(ex); }
         }

@@ -1,6 +1,11 @@
-﻿namespace ShareLingo.Core.ViewModel.Component
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace ShareLingo.Core.ViewModel.Component
 {
-    public class ModuleItemViewModel
+    public partial class ModuleItemViewModel : ObservableObject
     {
+        #region Fields
+        [ObservableProperty] private string name;
+        #endregion
     }
 }

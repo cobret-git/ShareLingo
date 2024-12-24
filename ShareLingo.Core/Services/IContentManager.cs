@@ -5,10 +5,13 @@ namespace ShareLingo.Core.Services
     public interface IContentManager
     {
         Task<DefaultDialogViewModel> ShowWarn(string title, string message);
-        Task<DefaultDialogViewModel> ShowError(string title, string message);
+        Task<DefaultDialogViewModel> ShowError(string message);
         Task<DefaultDialogViewModel> ShowInfo(string title, string message);
-        Task<DefaultDialogViewModel> ShowConfirm(string title, string message, DialogButtons buttons);
-        Task<PromptDialogViewModel> ShowPrompt(string title, string message, IPromptValidator? validator);
+        Task<DefaultDialogViewModel> ShowConfirm(string message, DialogButtons buttons);
+        Task<PromptDialogViewModel> ShowPrompt(string message, IPromptValidator? validator);
+
+        Task<OpenFileDialogViewModel> OpenFile(string filter, string? initialDirectory = null, bool multiple = false);
+        Task<SaveFileDIalogViewModel> SaveFile(string filter, string? initialDirectory = null, string? filename = null);
 
         void InspectCourse(CourseContainerViewModel course);
         void InspectModule(ModuleItemViewModel module);
