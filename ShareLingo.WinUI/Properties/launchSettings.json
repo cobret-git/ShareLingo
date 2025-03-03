@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ShareLingo.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ShareLingo.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
