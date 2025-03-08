@@ -1,7 +1,8 @@
 ﻿using LiteDB;
-using ShareLingo.Core.Model.Database.Component;
+using ShareLingo.WinUI.Model.Database.Component;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ShareLingo.WinUI.Model.Database
 {

@@ -40,6 +40,7 @@ namespace ShareLingo.WinUI
             services.AddSingleton<IEventAggregator, EventAggregator>();
             services.AddSingleton<IBuildInfoManager, BuildInfoManager>();
             services.AddSingleton<ILoggerManager, LoggerManager>();
+            services.AddSingleton<IMediaManager, MediaManager>();
 
             return services.BuildServiceProvider();
         }

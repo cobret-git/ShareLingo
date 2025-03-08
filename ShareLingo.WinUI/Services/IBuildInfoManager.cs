@@ -9,8 +9,9 @@ namespace ShareLingo.WinUI.Services
         #region Properties
         Version Version { get; }
         IFileSystem FileSystem { get; }
-        string MediaDirectoryPath { get; }
+        string MediaDirectory { get; }
         string LogDirectory { get; }
+        string DataDirectory { get; }
         #endregion
 
         #region Methods
@@ -31,14 +32,17 @@ namespace ShareLingo.WinUI.Services
                 : Windows.Storage.ApplicationData.Current.LocalFolder.Path;
 
             LogDirectory = FileSystem.Path.Combine(localDataDir, "Logs");
+            DataDirectory = FileSystem.Path.Combine(localDataDir, "Data");
+            MediaDirectory = FileSystem.Path.Combine(localDataDir, "Data", "Media");
         }
         #endregion
 
         #region Properties
         public Version Version { get;}
         public IFileSystem FileSystem { get;}
-        public string MediaDirectoryPath { get;}
+        public string MediaDirectory { get;}
         public string LogDirectory { get; }
+        public string DataDirectory { get; }
         #endregion
 
         #region Methodss

@@ -7,6 +7,7 @@ using fpr = ShareLingo.Core.Resources.FileProperties;
 using System.Globalization;
 using ShareLingo.WinUI.Services;
 using System;
+using System.Threading.Tasks;
 
 namespace ShareLingo.WinUI.ViewModel
 {

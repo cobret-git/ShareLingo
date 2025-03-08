@@ -1,5 +1,6 @@
 ﻿using ShareLingo.WinUI.Model.Database;
 using ShareLingo.WinUI.Model.Database.Component;
+using ShareLingo.WinUI.ViewModel;
 using ShareLingo.WinUI.ViewModel.Component;
 using System;
 using System.Collections.Generic;
@@ -29,8 +30,22 @@ namespace ShareLingo.WinUI.Services
         private readonly IFileSystem fileSystem;
         private readonly IBuildInfoManager buildManager;
         private readonly DocumentDatabase db;
+        #endregion
 
-        public IMediaManager Media => throw new NotImplementedException();
+        #region Constructors
+        public DataManager(IBuildInfoManager buildManager)
+        {
+            this.buildManager = buildManager;
+            this.fileSystem = buildManager.FileSystem;
+
+            var databaseFilePath = fileSystem.Path.Combine(buildManager.DataDirectory, "data.db");
+            db = new DocumentDatabase(databaseFilePath, "nopassword");
+            
+        }
+        #endregion
+
+        #region Properties
+        public IMediaManager Media { get; }
         #endregion
 
         #region Methods
@@ -44,7 +59,7 @@ namespace ShareLingo.WinUI.Services
             var dataItems = db.GetContainers(skip, limit);
             foreach (var item in dataItems)
             {
-                var coverFilePath = fileSystem.Path.Combine(buildManager.MediaDirectoryPath, item.PictureCoverPath);
+                var coverFilePath = fileSystem.Path.Combine(buildManager.MediaDirectory, item.PictureCoverPath);
                 yield return new CourseContainerViewModel(item, coverFilePath);
             }
         }
