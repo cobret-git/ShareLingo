@@ -33,10 +33,12 @@ namespace ShareLingo.WinUI.Services
         #endregion
 
         #region Constructors
-        public DataManager(IBuildInfoManager buildManager)
+        public DataManager(IBuildInfoManager buildManager, IMediaManager mediaManager)
         {
             this.buildManager = buildManager;
             this.fileSystem = buildManager.FileSystem;
+
+            Media = mediaManager;
 
             var databaseFilePath = fileSystem.Path.Combine(buildManager.DataDirectory, "data.db");
             db = new DocumentDatabase(databaseFilePath, "nopassword");
@@ -85,7 +87,6 @@ namespace ShareLingo.WinUI.Services
         {
             //db.DeleteModule();
         }
-
         public void SaveCourse(CourseContainerViewModel course)
         {
             throw new NotImplementedException();

@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using NetForge.Core;
 
 namespace ShareLingo.WinUI.ViewModel
 {
-    public partial class ModuleItemViewModel : ObservableObject
+    public partial class ModuleItemViewModel : ObservableObject, IPageDataParameter
     {
         #region Fields
         #endregion

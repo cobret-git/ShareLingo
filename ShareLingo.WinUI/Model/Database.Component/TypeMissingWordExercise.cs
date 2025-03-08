@@ -1,4 +1,6 @@
-﻿namespace ShareLingo.WinUI.Model.Database.Component
+﻿using System;
+
+namespace ShareLingo.WinUI.Model.Database.Component
 {
     public class TypeMissingWordExercise : ExerciseContentBase
     {

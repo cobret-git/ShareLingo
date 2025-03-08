@@ -1,4 +1,5 @@
 ﻿using LiteDB;
+using System;
 
 namespace ShareLingo.WinUI.Model.Database.Component
 {

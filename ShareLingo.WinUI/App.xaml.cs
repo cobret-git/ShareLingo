@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using NetForge.Core;
 using ShareLingo.WinUI.Services;
 using ShareLingo.WinUI.View;
+using ShareLingo.WinUI.ViewModel;
 using System;
 
 namespace ShareLingo.WinUI
@@ -41,6 +42,10 @@ namespace ShareLingo.WinUI
             services.AddSingleton<IBuildInfoManager, BuildInfoManager>();
             services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddSingleton<IMediaManager, MediaManager>();
+            services.AddSingleton<IDataManager, DataManager>();
+
+            services.AddTransient<CourseBrowserViewModel>();
+            services.AddTransient<CourseInspectorViewModel>();
 
             return services.BuildServiceProvider();
         }

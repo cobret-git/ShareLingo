@@ -140,5 +140,14 @@ namespace ShareLingo.WinUI.Resources.Strings {
                 return ResourceManager.GetString("courseInspector_enterModuleNamePrompt", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This course has unsaved changes. Save them?.
+        /// </summary>
+        internal static string courseInspector_saveChangesConfirm {
+            get {
+                return ResourceManager.GetString("courseInspector_saveChangesConfirm", resourceCulture);
+            }
+        }
     }
 }

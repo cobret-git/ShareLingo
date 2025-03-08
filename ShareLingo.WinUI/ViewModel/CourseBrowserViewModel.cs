@@ -16,7 +16,6 @@ namespace ShareLingo.WinUI.ViewModel
     public partial class CourseBrowserViewModel : PageViewModelBase
     {
         #region Fields
-        private readonly IEventAggregator eventAggregator;
         private readonly IDataManager dataManager;
         private readonly IContentManager contentManager;
         #endregion
@@ -40,7 +39,6 @@ namespace ShareLingo.WinUI.ViewModel
         #region Methods
         public override void Dispose()
         {
-            throw new NotImplementedException();
         }
         [RelayCommand] private async Task CreateCourse()
         {
@@ -101,11 +99,11 @@ namespace ShareLingo.WinUI.ViewModel
         #region Handlers
         protected override void OnPageClosing(PageClosingEventArgs e)
         {
-            throw new NotImplementedException();
+            e.IsCanceled = false;
         }
         protected override void OnPageClosed(PageClosedEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
         #endregion
     }

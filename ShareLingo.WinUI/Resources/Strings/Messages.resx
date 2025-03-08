@@ -144,4 +144,7 @@
   <data name="courseInspector_enterModuleNamePrompt" xml:space="preserve">
     <value>Enter the module's name:</value>
   </data>
+  <data name="courseInspector_saveChangesConfirm" xml:space="preserve">
+    <value>This course has unsaved changes. Save them?</value>
+  </data>
 </root>

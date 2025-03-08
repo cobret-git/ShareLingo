@@ -26,6 +26,10 @@ namespace ShareLingo.WinUI.View
         {
             this.eventAggregator = App.Current.Services.GetService<IEventAggregator>()!;
             var contentManager = App.Current.Services.GetService<IContentManager>() as ContentManager;
+
+            viewModelsToView.Add(typeof(CourseBrowserViewModel), typeof(CourseBrowserPage));
+            viewModelsToView.Add(typeof(CourseInspectorViewModel), typeof(CourseInspectorPage));
+
             this.ExtendsContentIntoTitleBar = true;
             this.InitializeComponent();
             RootGrid.DataContext = this;
