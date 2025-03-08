@@ -61,6 +61,42 @@ namespace ShareLingo.WinUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string dlgGen_cancelButtonText {
+            get {
+                return ResourceManager.GetString("dlgGen_cancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string dlgGen_noButtonText {
+            get {
+                return ResourceManager.GetString("dlgGen_noButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string dlgGen_okButtonText {
+            get {
+                return ResourceManager.GetString("dlgGen_okButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string dlgGen_yesButtonText {
+            get {
+                return ResourceManager.GetString("dlgGen_yesButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string mainWindow_courseBrowserNavigationMenuItem {

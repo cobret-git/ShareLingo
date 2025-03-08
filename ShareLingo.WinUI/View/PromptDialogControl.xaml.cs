@@ -12,17 +12,26 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using ShareLingo.WinUI.ViewModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace ShareLingo.WinUI.View
 {
-    public sealed partial class PromptDialogControl : UserControl
+    public sealed partial class PromptDialogControl : ContentDialog
     {
         public PromptDialogControl()
         {
             this.InitializeComponent();
+        }
+
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is not PromptDialogViewModel vm) return;
+            vm.
         }
     }
 }

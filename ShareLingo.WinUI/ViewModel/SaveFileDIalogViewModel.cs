@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShareLingo.WinUI.ViewModel
+﻿namespace ShareLingo.WinUI.ViewModel
 {
-    public class SaveFileDIalogViewModel
+    public class SaveFileDialogViewModel
     {
+        #region Constructors
+        public SaveFileDialogViewModel(string? fileName, bool fileSelected)
+        {
+            FileName = fileName!;
+            FileSelected = fileSelected;
+        }
+        #endregion
+
         #region Properties
         public string FileName { get; }
         public bool FileSelected { get; }

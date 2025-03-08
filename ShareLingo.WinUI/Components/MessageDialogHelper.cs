@@ -2,7 +2,8 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using NetForge.Core;
-using ShareLingo.WinUI.ViewModel.Component;
+using ShareLingo.WinUI.View;
+using ShareLingo.WinUI.ViewModel;
 using System;
 using System.Threading.Tasks;
 
@@ -10,12 +11,16 @@ namespace ShareLingo.WinUI.Components
 {
     public class MessageDialogHelper
     {
+        #region Fields
+        private ContentDialog? promptDialog;
+        #endregion
+
         #region Properties
-        public XamlRoot XamlRoot { get; set; }
+        public XamlRoot XamlRoot { get; set; } = null!;
         #endregion
 
         #region Methods
-        public async Task<DefaultDialogViewModel> ShowWarn(string title, string message)
+        public async Task<DefaultDialogViewModel> ShowWarn(string message)
         {
             var dialog = new ContentDialog();
             dialog.XamlRoot = XamlRoot;
@@ -57,23 +62,33 @@ namespace ShareLingo.WinUI.Components
         }
         public async Task<PromptDialogViewModel> ShowPrompt(string message, IAttachedTextValidator? validator)
         {
-            var dialog = new ContentDialog();
-            var viewModel = new PromptDialogViewModel(message, validator);
-            dialog.DataContext = viewModel;
-            dialog.XamlRoot = XamlRoot;
-            dialog.DefaultButton = ContentDialogButton.Primary;
-
-            var textBox = new TextBox();
-            textBox.SetBinding(TextBox.TextProperty, new Binding()
+            PromptDialogViewModel? viewModel = null;
+            try
             {
-                Source = viewModel,
-                Path = new PropertyPath(nameof(PromptDialogViewModel.Prompt)),
-                Mode = BindingMode.TwoWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            });
-            SetDialogButtons(dialog, buttons);
-            var result = await dialog.ShowAsync();
-            return new DefaultDialogViewModel(string.Empty, message, buttons, ConvertToResult(result, buttons));
+                var dialog = new ContentDialog();
+                this.promptDialog = dialog;
+                viewModel = new PromptDialogViewModel();
+                viewModel.ValidationResultChanged += ViewModel_ValidationResultChanged;
+                dialog.XamlRoot = XamlRoot;
+                dialog.DefaultButton = ContentDialogButton.Primary;
+                dialog.Content = new PromptDialogControl() { DataContext = viewModel };
+                SetDialogButtons(dialog, DialogButtons.OkCancel);
+                var result = await dialog.ShowAsync();
+                return viewModel;
+            }
+            finally
+            {
+                if (viewModel != null) viewModel.ValidationResultChanged += ViewModel_ValidationResultChanged;
+            }
+            
+        }
+        #endregion
+
+        #region Handlers
+        private void ViewModel_ValidationResultChanged(object? sender, bool e)
+        {
+            if (promptDialog != null)
+                promptDialog.IsPrimaryButtonEnabled = e;
         }
         #endregion
 

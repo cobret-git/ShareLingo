@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<UserControl
+<ContentDialog
     x:Class="ShareLingo.WinUI.View.PromptDialogControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:ShareLingo.WinUI.ViewModel"
+    xmlns:str="using:ShareLingo.WinUI.Resources.Strings"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance vm:PromptDialogViewModel, IsDesignTimeCreatable=False}">
 
@@ -23,6 +24,7 @@
                  Text="{Binding Prompt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="2"
                    Text="{Binding ErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                   Visibility="{Binding IsValid, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource }}"
+                   Visibility="{Binding IsValid, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, 
+                    Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
     </Grid>
-</UserControl>
+</ContentDialog>
