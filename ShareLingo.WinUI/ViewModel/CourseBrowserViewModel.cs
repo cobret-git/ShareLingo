@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using NetForge.Core;
 using NetForge.Core.EventArgs;
+using ShareLingo.WinUI.Extensions;
 using ShareLingo.WinUI.Services;
 using ShareLingo.WinUI.ViewModel.Component;
 using System;
@@ -55,7 +56,8 @@ namespace ShareLingo.WinUI.ViewModel
                 {
                     var course = dataManager.CreateCourse(prompt.Prompt);
                     Items.Add(course);
-                    contentManager.InspectCourse(course);
+                    var request = PageSource.CourseInspector.ToRequest(NavigationRequestAction.GoNext, course);
+                    eventAggregator.Publish(request);
                 }
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }
@@ -65,7 +67,8 @@ namespace ShareLingo.WinUI.ViewModel
             try
             {
                 if (item == null) return;
-                contentManager.InspectCourse(item);
+                var request = PageSource.CourseInspector.ToRequest(NavigationRequestAction.GoNext, item);
+                eventAggregator.Publish(request);
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }
         }

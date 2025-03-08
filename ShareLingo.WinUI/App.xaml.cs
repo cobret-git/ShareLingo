@@ -12,6 +12,9 @@ namespace ShareLingo.WinUI
         public App()
         {
             Services = ConfigureServices();
+
+            _ = Services.GetService<ILoggerManager>(); //init service for handling logs
+
             this.InitializeComponent();
         }
 
@@ -35,6 +38,8 @@ namespace ShareLingo.WinUI
             var services = new ServiceCollection();
 
             services.AddSingleton<IEventAggregator, EventAggregator>();
+            services.AddSingleton<IBuildInfoManager, BuildInfoManager>();
+            services.AddSingleton<ILoggerManager, LoggerManager>();
 
             return services.BuildServiceProvider();
         }

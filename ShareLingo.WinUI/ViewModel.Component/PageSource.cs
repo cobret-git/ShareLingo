@@ -4,6 +4,7 @@ namespace ShareLingo.WinUI.ViewModel.Component
 {
     public enum PageSource
     {
-        [PageSource(typeof(CourseBrowserViewModel))] CourseBrowser
+        [PageSource(typeof(CourseBrowserViewModel))] CourseBrowser,
+        [PageSource(typeof(CourseInspectorViewModel))] CourseInspector
     }
 }

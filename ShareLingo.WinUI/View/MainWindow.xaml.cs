@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using NetForge.Core;
 using NetForge.Core.EventArgs;
+using ShareLingo.WinUI.Services;
 using ShareLingo.WinUI.ViewModel;
 using ShareLingo.WinUI.ViewModel.Component;
 using System;
@@ -24,10 +25,11 @@ namespace ShareLingo.WinUI.View
         public MainWindow()
         {
             this.eventAggregator = App.Current.Services.GetService<IEventAggregator>()!;
+            var contentManager = App.Current.Services.GetService<IContentManager>() as ContentManager;
             this.ExtendsContentIntoTitleBar = true;
             this.InitializeComponent();
             RootGrid.DataContext = this;
-
+            if (contentManager != null) contentManager.MainWindowXamlRoot = RootGrid.XamlRoot;
             subscribeTokens.Add(typeof(PageNavigationRequest),
                 eventAggregator.SubscribeAction<PageNavigationRequest>(OnPageNavigationRequestReceived));
         }
@@ -97,7 +99,6 @@ namespace ShareLingo.WinUI.View
         #endregion
 
         #region Properties
-        public MainViewModel? ViewModel { get => RootGrid?.DataContext as MainViewModel; }
         #endregion
 
         #region Handlers
