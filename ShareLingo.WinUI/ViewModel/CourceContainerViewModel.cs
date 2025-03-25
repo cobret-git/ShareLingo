@@ -4,7 +4,7 @@ using ShareLingo.WinUI.Model.Database.Component;
 using System.ComponentModel;
 using System.Xml.Linq;
 
-namespace ShareLingo.WinUI.ViewModel.Component
+namespace ShareLingo.WinUI.ViewModel
 {
     public partial class CourseContainerViewModel : ObservableObject, ICloneable<CourseContainerViewModel>, IPageDataParameter
     {

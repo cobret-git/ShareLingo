@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentDialog
+<UserControl
     x:Class="ShareLingo.WinUI.View.PromptDialogControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -16,15 +16,19 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" TextWrapping="Wrap"
-                   Text="{Binding Message, Mode=OneTime}"/>
-        <TextBox Grid.Row="1"
+                   Text="{Binding Message, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="1" Margin="0,5,0,0" Width="320"
                  Text="{Binding Prompt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock Grid.Row="2"
+        <InfoBar Grid.Row="2" Severity="Success" Title="{x:Bind str:Content.promptDialog_textValidTitle}" Margin="0,5,0,0" IsClosable="False"
+                 IsOpen="{Binding IsValid, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <InfoBar Grid.Row="2" Severity="Error" Title="{x:Bind str:Content.promptDialog_textInvalidTItle}"  Margin="0,5,0,0" IsClosable="False" 
+                 IsOpen="{Binding IsValid, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InverseBooleanConverter}}"
+                 Message="{Binding ErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <!--<TextBlock Grid.Row="2"
                    Text="{Binding ErrorMessage, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                    Visibility="{Binding IsValid, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, 
-                    Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+                    Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>-->
     </Grid>
-</ContentDialog>
+</UserControl>

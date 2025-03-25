@@ -9,7 +9,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
-                
+                <ResourceDictionary Source="/Resources/Xaml/CustomTemplates.xaml"/>
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>

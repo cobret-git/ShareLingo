@@ -7,25 +7,41 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:ShareLingo.WinUI.ViewModel"
+    xmlns:vmcom="using:ShareLingo.WinUI.ViewModel.Component"
     mc:Ignorable="d">
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
-    <Grid x:Name="RootGrid" d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=False}">
-        <NavigationView x:Name="nvSample" Loaded="nvSample_Loaded" IsSettingsVisible="False" 
+    <Grid x:Name="RootGrid" d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=False}" Loaded="RootGrid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="10,5,5,5">
+            <TextBlock Text="ShareLingo"/>
+        </StackPanel>
+        <NavigationView x:Name="nvSample" Grid.Row="1" Loaded="nvSample_Loaded" IsSettingsVisible="False"
+                        SelectionChanged="nvSample_SelectionChanged" Background="Transparent"
                         AlwaysShowHeader="True" IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Home" Content="Home" Tag="View.CourseBrowser" />
+                <NavigationViewItem x:Name="HomeMenuItem" Icon="Home" Content="Home" Tag="{x:Bind vmcom:PageSource.CourseBrowser}" />
             </NavigationView.MenuItems>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <BreadcrumbBar Grid.Row="0" 
+                <BreadcrumbBar Grid.Row="0" Background="Transparent"
                                ItemClicked="BreadcrumbBar_ItemClicked"
-                               ItemsSource="{Binding BreadcrumbItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Frame Grid.Row="1" x:Name="contentFrame"/>
+                               ItemsSource="{Binding BreadcrumbItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                    <BreadcrumbBar.ItemTemplate>
+                        <DataTemplate x:DataType="vmcom:BreadcrumbBarDataItem">
+                            <TextBlock Text="{Binding Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                       FontWeight="Medium" FontSize="32" Margin="10"/>
+                        </DataTemplate>
+                    </BreadcrumbBar.ItemTemplate>
+                </BreadcrumbBar>
+                <Frame Grid.Row="1" x:Name="contentFrame" Background="Transparent"/>
             </Grid>
         </NavigationView>
     </Grid>

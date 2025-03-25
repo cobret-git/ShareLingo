@@ -28,19 +28,11 @@ namespace ShareLingo.WinUI.ViewModel
         public string ErrorMessage { get => errorMessage; private set { errorMessage = value; OnPropertyChanged(); } }
         public bool IsValid { get => isValid; private set { isValid = value; OnPropertyChanged(); } }
         public string Prompt { get => prompt; set { prompt = value; OnPromptChanged(value); } }
-        public DialogResult Result { get; private set; }
-        public IAttachedTextValidator? Validator { get; }
+        public DialogResult Result { get; set; }
+        public IAttachedTextValidator? Validator { get; init; }
         #endregion
 
         #region Methods
-        [RelayCommand] private void Apply()
-        {
-            Result = DialogResult.Ok;
-        }
-        [RelayCommand] private void Cancel()
-        {
-            Result = DialogResult.Cancel;
-        }
         #endregion
 
         #region Handlers

@@ -67,13 +67,15 @@ namespace ShareLingo.WinUI.Components
             {
                 var dialog = new ContentDialog();
                 this.promptDialog = dialog;
-                viewModel = new PromptDialogViewModel();
+                viewModel = new PromptDialogViewModel() { Message = message, Validator = validator };
+                viewModel.Prompt = string.Empty;
                 viewModel.ValidationResultChanged += ViewModel_ValidationResultChanged;
                 dialog.XamlRoot = XamlRoot;
                 dialog.DefaultButton = ContentDialogButton.Primary;
                 dialog.Content = new PromptDialogControl() { DataContext = viewModel };
                 SetDialogButtons(dialog, DialogButtons.OkCancel);
                 var result = await dialog.ShowAsync();
+                viewModel.Result = ConvertToResult(result, DialogButtons.OkCancel);
                 return viewModel;
             }
             finally

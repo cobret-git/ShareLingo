@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using NetForge.Core;
 using NetForge.Core.EventArgs;
+using ShareLingo.WinUI.Extensions;
 using ShareLingo.WinUI.Services;
 using ShareLingo.WinUI.ViewModel;
 using ShareLingo.WinUI.ViewModel.Component;
@@ -25,7 +26,6 @@ namespace ShareLingo.WinUI.View
         public MainWindow()
         {
             this.eventAggregator = App.Current.Services.GetService<IEventAggregator>()!;
-            var contentManager = App.Current.Services.GetService<IContentManager>() as ContentManager;
 
             viewModelsToView.Add(typeof(CourseBrowserViewModel), typeof(CourseBrowserPage));
             viewModelsToView.Add(typeof(CourseInspectorViewModel), typeof(CourseInspectorPage));
@@ -33,7 +33,6 @@ namespace ShareLingo.WinUI.View
             this.ExtendsContentIntoTitleBar = true;
             this.InitializeComponent();
             RootGrid.DataContext = this;
-            if (contentManager != null) contentManager.MainWindowXamlRoot = RootGrid.XamlRoot;
             subscribeTokens.Add(typeof(PageNavigationRequest),
                 eventAggregator.SubscribeAction<PageNavigationRequest>(OnPageNavigationRequestReceived));
         }
@@ -50,14 +49,16 @@ namespace ShareLingo.WinUI.View
             {
                 if (contentFrame == null) throw new ArgumentNullException(nameof(contentFrame));
                 else if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+                viewModel.DataParameter = dataParameter;
                 var dictContainsKey = viewModelsToView.ContainsKey(viewModel.GetType());
                 if (!dictContainsKey) throw new ArgumentException($"Passed viewModel's type was not implemented: {viewModel.GetType().Name}");
                 var breadcrumbItem = new BreadcrumbBarDataItem(viewModel);
                 BreadcrumbItems.Add(breadcrumbItem);
-                var view = Activator.CreateInstance(viewModelsToView[viewModel.GetType()]) as Page;
-                if (view == null) throw new ArgumentNullException(nameof(view));
-                view.DataContext = viewModel;
-                contentFrame.Navigate(view.GetType(), dataParameter);
+                if (!contentFrame.Navigate(viewModelsToView[viewModel.GetType()])) throw new Exception("Unable to navigate.");
+                if (contentFrame.Content is Page page)
+                {
+                    page.DataContext = viewModel;
+                }
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }
         }
@@ -80,13 +81,24 @@ namespace ShareLingo.WinUI.View
             try
             {
                 if (BreadcrumbItems.Contains(item) != true) return;
+                if (contentFrame == null) throw new ArgumentNullException(nameof(contentFrame));
+                var viewModel = item.AssociatedPage;
+                if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+                var dictContainsKey = viewModelsToView.ContainsKey(viewModel.GetType());
+                if (!dictContainsKey) throw new ArgumentException($"Passed viewModel's type was not implemented: {viewModel.GetType().Name}");
                 var itemIndex = BreadcrumbItems.IndexOf(item);
-                var itemsToClose = BreadcrumbItems.Skip(itemIndex).Reverse().ToArray();
+                var itemsToClose = BreadcrumbItems.Skip(itemIndex + 1).Reverse().ToArray();
                 foreach (var itemToDispose in itemsToClose)
                 {
                     if (!ClosePage(itemToDispose.AssociatedPage)) break;
                     BreadcrumbItems.Remove(itemToDispose);
+                }                
+                if (!contentFrame.Navigate(viewModelsToView[viewModel.GetType()])) throw new Exception("Unable to navigate.");
+                if (contentFrame.Content is Page page)
+                {
+                    page.DataContext = viewModel;
                 }
+
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }            
         }
@@ -108,7 +120,8 @@ namespace ShareLingo.WinUI.View
         #region Handlers
         private void nvSample_Loaded(object sender, RoutedEventArgs e)
         {
-            contentFrame.Navigate(typeof(CourseBrowserPage));
+            nvSample.SelectedItem = HomeMenuItem;
+            //var courseBrowserViewModel = new 
         }
         private void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
@@ -131,5 +144,18 @@ namespace ShareLingo.WinUI.View
             }
         }
         #endregion
+
+        private void nvSample_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            var item = args.SelectedItemContainer;
+            if (item.Tag is not PageSource source) return;
+            var request = source.ToRequest(NavigationRequestAction.GoNext);
+            OnPageNavigationRequestReceived(request);
+        }
+        private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            var contentManager = App.Current.Services.GetService<IContentManager>() as ContentManager;
+            if (contentManager != null) contentManager.MainWindowXamlRoot = RootGrid.XamlRoot;
+        }
     }
 }

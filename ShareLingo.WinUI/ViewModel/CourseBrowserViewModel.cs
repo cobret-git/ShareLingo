@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using MSG = ShareLingo.WinUI.Resources.Strings.Messages;
+using CONTENT = ShareLingo.WinUI.Resources.Strings.Content;
 
 namespace ShareLingo.WinUI.ViewModel
 {
@@ -29,6 +30,8 @@ namespace ShareLingo.WinUI.ViewModel
         {
             this.dataManager = dataManager;
             this.contentManager = contentManager;
+
+            Header = CONTENT.courseBrowser_header;
         }
         #endregion
 
@@ -46,7 +49,7 @@ namespace ShareLingo.WinUI.ViewModel
             {
 
                 var validator = dataManager.GetCourseNameValidator();
-                var prompt = await contentManager.ShowPrompt(MSG.courseBrowser_enterCourseNamePrompt, null);
+                var prompt = await contentManager.ShowPrompt(MSG.courseBrowser_enterCourseNamePrompt, validator);
                 if (prompt.Result != DialogResult.Ok || !validator.IsValid(prompt.Prompt, out _)) return;
                 if (dataManager.GetContaienrs(0, int.MaxValue).Any(x => x.Name == prompt.Prompt))
                     await contentManager.ShowError(MSG.courseBrowser_enteredCourseNameAlreadyInUseError);

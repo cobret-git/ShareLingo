@@ -43,6 +43,7 @@ namespace ShareLingo.WinUI
             services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddSingleton<IMediaManager, MediaManager>();
             services.AddSingleton<IDataManager, DataManager>();
+            services.AddSingleton<IContentManager, ContentManager>();
 
             services.AddTransient<CourseBrowserViewModel>();
             services.AddTransient<CourseInspectorViewModel>();

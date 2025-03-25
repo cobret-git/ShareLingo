@@ -187,6 +187,7 @@ namespace ShareLingo.WinUI.ViewModel
             if (course == null) return;
             this.Course = (CourseContainerViewModel)course.Clone();
             this.initialCourse = course;
+            Header = Course.Name;
         }
         private void NotifyCanExecute()
         {

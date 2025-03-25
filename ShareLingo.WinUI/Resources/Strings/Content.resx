@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="courseBrowser_header" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="courseNameValidator_nameCannotBeEmpty" xml:space="preserve">
+    <value>The name cannot be empty.</value>
+  </data>
+  <data name="courseNameValidator_nameCannotContainIncorrectSymbols" xml:space="preserve">
+    <value>A course name cannot contain such characters.</value>
+  </data>
   <data name="dlgGen_cancelButtonText" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -131,5 +140,11 @@
   </data>
   <data name="mainWindow_courseBrowserNavigationMenuItem" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="promptDialog_textInvalidTItle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="promptDialog_textValidTitle" xml:space="preserve">
+    <value>The provided name is acceptable</value>
   </data>
 </root>

@@ -28,7 +28,7 @@ namespace ShareLingo.WinUI.Services
 
             var isDebug = IsDebug();
             var localDataDir = isDebug
-                ? Environment.CurrentDirectory
+                ? AppDomain.CurrentDomain.BaseDirectory
                 : Windows.Storage.ApplicationData.Current.LocalFolder.Path;
 
             LogDirectory = FileSystem.Path.Combine(localDataDir, "Logs");

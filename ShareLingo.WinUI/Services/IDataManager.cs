@@ -8,7 +8,7 @@ using System.IO.Abstractions;
 
 namespace ShareLingo.WinUI.Services
 {
-    public interface IDataManager
+    public interface IDataManager : IDisposable
     {
         #region Methods
         public IMediaManager Media { get; }
@@ -42,6 +42,7 @@ namespace ShareLingo.WinUI.Services
 
             var databaseFilePath = fileSystem.Path.Combine(buildManager.DataDirectory, "data.db");
             db = new DocumentDatabase(databaseFilePath, "nopassword");
+            db.Open();
             
         }
         #endregion
@@ -51,6 +52,10 @@ namespace ShareLingo.WinUI.Services
         #endregion
 
         #region Methods
+        public void Dispose()
+        {
+            db.Dispose();
+        }
         public CourseNameValidator GetCourseNameValidator()
         {
             var chars = fileSystem.Path.GetInvalidFileNameChars();
@@ -61,7 +66,9 @@ namespace ShareLingo.WinUI.Services
             var dataItems = db.GetContainers(skip, limit);
             foreach (var item in dataItems)
             {
-                var coverFilePath = fileSystem.Path.Combine(buildManager.MediaDirectory, item.PictureCoverPath);
+                var coverFilePath = string.IsNullOrWhiteSpace(item.PictureCoverPath)
+                    ? null
+                    : fileSystem.Path.Combine(buildManager.MediaDirectory, item.PictureCoverPath);
                 yield return new CourseContainerViewModel(item, coverFilePath);
             }
         }

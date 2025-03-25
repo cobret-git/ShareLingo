@@ -12,18 +12,31 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using ShareLingo.WinUI.ViewModel;
+using Microsoft.UI.Xaml.Media.Animation;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace ShareLingo.WinUI.View
 {
-    public sealed partial class PromptDialogControl : UserControl
+    public sealed partial class CourseItemView : UserControl
     {
-        public PromptDialogControl()
+
+        public CourseItemView()
         {
             this.InitializeComponent();
+        }
+
+        private void Border_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            CourseMenuButton.Visibility = Visibility.Visible;
+            GradientBorder.Opacity = 1;
+        }
+
+        private void Border_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            CourseMenuButton.Visibility = Visibility.Collapsed;
+            GradientBorder.Opacity = 0;
         }
     }
 }

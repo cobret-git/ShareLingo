@@ -61,6 +61,33 @@ namespace ShareLingo.WinUI.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string courseBrowser_header {
+            get {
+                return ResourceManager.GetString("courseBrowser_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name cannot be empty..
+        /// </summary>
+        public static string courseNameValidator_nameCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("courseNameValidator_nameCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A course name cannot contain such characters..
+        /// </summary>
+        public static string courseNameValidator_nameCannotContainIncorrectSymbols {
+            get {
+                return ResourceManager.GetString("courseNameValidator_nameCannotContainIncorrectSymbols", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string dlgGen_cancelButtonText {
@@ -102,6 +129,24 @@ namespace ShareLingo.WinUI.Resources.Strings {
         public static string mainWindow_courseBrowserNavigationMenuItem {
             get {
                 return ResourceManager.GetString("mainWindow_courseBrowserNavigationMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string promptDialog_textInvalidTItle {
+            get {
+                return ResourceManager.GetString("promptDialog_textInvalidTItle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The provided name is acceptable.
+        /// </summary>
+        public static string promptDialog_textValidTitle {
+            get {
+                return ResourceManager.GetString("promptDialog_textValidTitle", resourceCulture);
             }
         }
     }
