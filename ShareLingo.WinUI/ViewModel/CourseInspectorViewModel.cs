@@ -39,7 +39,7 @@ namespace ShareLingo.WinUI.ViewModel
         public ObservableCollection<ModuleItemViewModel> Modules { get; } = new();
         [ObservableProperty] public partial bool Editing { get; set; }
         public CultureInfo[] CultureInfos { get; }
-        public override IPageDataParameter? DataParameter { get => initialCourse; set => SetCourse(value as CourseContainerViewModel); }
+        public override IViewModelDataParameter? DataParameter { get => initialCourse; set => SetCourse(value as CourseContainerViewModel); }
         #endregion
 
         #region Methods
@@ -48,18 +48,7 @@ namespace ShareLingo.WinUI.ViewModel
             IsDisposed = true;
         }
         
-        [RelayCommand(CanExecute = nameof(Editing))] private async Task ChangeCourseCover()
-        {
-            try
-            {
-                var openDlg = await contentManager.OpenFile(FPR.image_dlgFilter);
-                if (!openDlg.FileSelected) return;
-                var data = dataManager.Media.ImportCourseImage(openDlg.FileName);
-                Course.PictureCoverPath = data.RelativePath;
-                Course.PictureCoverAbsolutePath = data.AbsolutePath;
-            }
-            catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }
-        }
+        
         [RelayCommand(CanExecute = nameof(CanBeginEdit))] private void BeginEdit()
         {
             try

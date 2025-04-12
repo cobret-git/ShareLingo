@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace ShareLingo.WinUI.ViewModel
 {
-    public partial class CourseContainerViewModel : ObservableObject, ICloneable<CourseContainerViewModel>, IPageDataParameter
+    public partial class CourseContainerViewModel : ObservableObject, ICloneable<CourseContainerViewModel>, IViewModelDataParameter
     {
         #region Fields
         #endregion

@@ -103,6 +103,7 @@ namespace ShareLingo.WinUI.Components
                     dialog.PrimaryButtonText = "OK";
                     dialog.CloseButtonText = "Cancel";
                     dialog.IsSecondaryButtonEnabled = false;
+                    dialog.CloseBut
                     break;
                 case DialogButtons.OkCancel:
                     dialog.PrimaryButtonText = "OK";

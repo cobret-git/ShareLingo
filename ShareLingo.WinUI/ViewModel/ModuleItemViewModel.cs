@@ -3,7 +3,7 @@ using NetForge.Core;
 
 namespace ShareLingo.WinUI.ViewModel
 {
-    public partial class ModuleItemViewModel : ObservableObject, IPageDataParameter
+    public partial class ModuleItemViewModel : ObservableObject, IViewModelDataParameter
     {
         #region Fields
         #endregion

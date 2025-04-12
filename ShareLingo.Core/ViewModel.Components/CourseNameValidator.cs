@@ -1,9 +1,9 @@
 ﻿using NetForge.Core;
 using System;
 using System.Linq;
-using CONTENT = ShareLingo.WinUI.Resources.Strings.Content;
+using CONTENT = ShareLingo.Core.Resources.Content;
 
-namespace ShareLingo.WinUI.ViewModel.Component
+namespace ShareLingo.Core.ViewModel.Component
 {
     public class CourseNameValidator : IAttachedTextValidator
     {

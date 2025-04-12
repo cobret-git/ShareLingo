@@ -26,7 +26,7 @@ namespace ShareLingo.WinUI.ViewModel
 
         #region Properties
         public string Header { get => header; set { header = value; OnPropertyChanged(); } }
-        public virtual IPageDataParameter? DataParameter { get; set; }
+        public virtual IViewModelDataParameter? DataParameter { get; set; }
         public bool IsDisposed { get; protected set; }
         #endregion
 

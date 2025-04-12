@@ -43,7 +43,7 @@ namespace ShareLingo.WinUI.View
         #endregion
 
         #region Methods
-        public void NavigateToNext(IPageViewModel viewModel, IPageDataParameter? dataParameter = null)
+        public void NavigateToNext(IPageViewModel viewModel, IViewModelDataParameter? dataParameter = null)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace ShareLingo.WinUI.View
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }
         }
-        public void NavigateToPrevious(IPageViewModel viewModel, IPageDataParameter? dataParameter = null)
+        public void NavigateToPrevious(IPageViewModel viewModel, IViewModelDataParameter? dataParameter = null)
         {
             try
             {

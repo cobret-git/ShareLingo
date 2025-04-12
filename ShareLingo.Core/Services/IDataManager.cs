@@ -1,27 +1,20 @@
-﻿using ShareLingo.WinUI.Model.Database;
-using ShareLingo.WinUI.Model.Database.Component;
-using ShareLingo.WinUI.ViewModel;
-using ShareLingo.WinUI.ViewModel.Component;
-using System;
-using System.Collections.Generic;
+﻿using ShareLingo.Core.Model;
+using ShareLingo.Core.Model.Database;
+using ShareLingo.Core.ViewModel.Component;
 using System.IO.Abstractions;
 
-namespace ShareLingo.WinUI.Services
+namespace ShareLingo.Core.Services
 {
     public interface IDataManager : IDisposable
     {
         #region Methods
-        public IMediaManager Media { get; }
-        #endregion
-
-        #region Methods
-        IEnumerable<CourseContainerViewModel> GetContaienrs(int skip, int limit);
-        CourseNameValidator GetCourseNameValidator();
-        CourseContainerViewModel CreateCourse(string name);
-        ModuleItemViewModel CreateModule(string name);
-        void DeleteCourse(CourseContainerViewModel course);
-        void DeleteModule(ModuleItemViewModel module);
-        void SaveCourse(CourseContainerViewModel course);
+        //IEnumerable<CourseContainer> GetContaienrs(int skip, int limit);
+        //CourseNameValidator GetCourseNameValidator();
+        //CourseContainerViewModel CreateCourse(string name);
+        //ModuleItemViewModel CreateModule(string name);
+        //void DeleteCourse(CourseContainerViewModel course);
+        //void DeleteModule(ModuleItemViewModel module);
+        //void SaveCourse(CourseContainerViewModel course);
         #endregion
     }
     public class DataManager : IDataManager
@@ -33,22 +26,20 @@ namespace ShareLingo.WinUI.Services
         #endregion
 
         #region Constructors
-        public DataManager(IBuildInfoManager buildManager, IMediaManager mediaManager)
+        public DataManager(IBuildInfoManager buildManager)
         {
             this.buildManager = buildManager;
             this.fileSystem = buildManager.FileSystem;
 
-            Media = mediaManager;
 
             var databaseFilePath = fileSystem.Path.Combine(buildManager.DataDirectory, "data.db");
             db = new DocumentDatabase(databaseFilePath, "nopassword");
             db.Open();
-            
+
         }
         #endregion
 
         #region Properties
-        public IMediaManager Media { get; }
         #endregion
 
         #region Methods
@@ -66,16 +57,16 @@ namespace ShareLingo.WinUI.Services
             var dataItems = db.GetContainers(skip, limit);
             foreach (var item in dataItems)
             {
-                var coverFilePath = string.IsNullOrWhiteSpace(item.PictureCoverPath)
+                var coverFilePath = string.IsNullOrWhiteSpace(item.CoverId)
                     ? null
-                    : fileSystem.Path.Combine(buildManager.MediaDirectory, item.PictureCoverPath);
+                    : fileSystem.Path.Combine(buildManager.MediaDirectory, item.CoverId);
                 yield return new CourseContainerViewModel(item, coverFilePath);
             }
         }
         public CourseContainerViewModel CreateCourse(string name)
         {
-            var courseContainer = new CourseContainer() 
-            { 
+            var courseContainer = new CourseContainer()
+            {
                 Name = name,
                 Year = (ushort)DateTime.Today.Year
             };

@@ -8,7 +8,7 @@ namespace ShareLingo.Core.Extensions
     public static class SourceExtensions
     {
         public static PageNavigationRequest ToRequest(this PageSource source, 
-            NavigationRequestAction action, IPageDataParameter? parameter = null)
+            NavigationRequestAction action, IViewModelDataParameter? parameter = null)
         {
             var field = source.GetType().GetField(source.ToString());
             var attribute = field?.GetCustomAttribute<PageSourceAttribute>();

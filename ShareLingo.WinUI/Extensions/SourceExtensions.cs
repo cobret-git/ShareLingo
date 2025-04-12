@@ -8,7 +8,7 @@ namespace ShareLingo.WinUI.Extensions
     public static class SourceExtensions
     {
         public static PageNavigationRequest ToRequest(this PageSource source, 
-            NavigationRequestAction action, IPageDataParameter? parameter = null)
+            NavigationRequestAction action, IViewModelDataParameter? parameter = null)
         {
             var field = source.GetType().GetField(source.ToString());
             var attribute = field?.GetCustomAttribute<PageSourceAttribute>();
@@ -16,5 +16,6 @@ namespace ShareLingo.WinUI.Extensions
             return new PageNavigationRequest(attribute.ViewModelType, action, parameter);
 
         }
+        public 
     }
 }

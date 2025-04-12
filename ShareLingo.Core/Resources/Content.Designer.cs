@@ -61,6 +61,24 @@ namespace ShareLingo.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _.
+        /// </summary>
+        public static string courseNameValidator_nameCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("courseNameValidator_nameCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _.
+        /// </summary>
+        public static string courseNameValidator_nameCannotContainIncorrectSymbols {
+            get {
+                return ResourceManager.GetString("courseNameValidator_nameCannotContainIncorrectSymbols", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string mainWindow_courseBrowserNavigationMenuItem {
