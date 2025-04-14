@@ -11,7 +11,7 @@ namespace ShareLingo.Core.Model
 
         #region Properties
         [BsonId] public int Id { get; set; }
-        [BsonRef(ExerciseContainer.COLLECTION_NAME)] public ExerciseContainer Exercise { get; set; } = null!;
+        [BsonRef(ExerciseBase.COLLECTION_NAME)] public ExerciseBase Exercise { get; set; } = null!;
         public byte Score { get; set; }
         public DateTime LastCompleteOn { get; set; }
         public ResultAttempt[] Attempts { get; set; } = Array.Empty<ResultAttempt>();

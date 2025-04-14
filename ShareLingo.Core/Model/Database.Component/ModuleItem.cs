@@ -1,30 +1,71 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LiteDB;
+using NetForge.Core;
 
 namespace ShareLingo.Core.Model
 {
-    public class ModuleItem : ObservableObject
+    public class ModuleItem : ObservableObject, ICloneable<ModuleItem>
     {
         #region Consts
         public const string COLLECTION_NAME = "ModuleItems";
         #endregion
 
+        #region Fields
+        private string name = string.Empty;
+        private string author = string.Empty;
+        private int index;
+        private string coverId = string.Empty;
+        private string theoryDocumentId = string.Empty;
+        #endregion
+
         #region Properties
         [BsonId] public int Id { get; set; }
+
         /// <summary>
         /// The unique module's name.
         /// </summary>
-        public string Name { get; set; } = string.Empty;
+        public string Name { get => name; set { name = value; OnPropertyChanged(); } }
+
+        /// <summary>
+        /// The parent course of the module.
+        /// </summary>
         [BsonRef(CourseContainer.COLLECTION_NAME)] public CourseContainer Course { get; set; } = null!;
-        public string Description { get; set; } = string.Empty;
-        public string Author { get; set; } = string.Empty;
+
+        /// <summary>
+        /// The module's author.
+        /// </summary>
+        public string Author { get => author; set { author = value; OnPropertyChanged(); } }
 
         /// <summary>
         /// The unique module's number.
         /// </summary>
-        public int ModuleNumber { get; set; }
-        public string PictureCoverPath { get; set; } = string.Empty;
-        public string TheoryDocumentPath { get; set;} = string.Empty;
+        public int Index { get => index; set { index = value; OnPropertyChanged(); } }
+
+        /// <summary>
+        /// The file id of module's cover.
+        /// </summary>
+        public string CoverId { get => coverId; set { coverId = value; OnPropertyChanged(); } }
+
+        /// <summary>
+        /// The file id of module's theory document.
+        /// </summary>
+        public string TheoryDocumentId { get => theoryDocumentId; set { theoryDocumentId = value; OnPropertyChanged(); } }
+        #endregion
+
+        #region Methods
+        public ModuleItem Clone()
+        {
+            return new ModuleItem()
+            {
+                Id = Id,
+                Name = Name,
+                Author = Author,
+                Index = Index,
+                Course = Course,
+                CoverId = CoverId,
+                TheoryDocumentId = TheoryDocumentId
+            };
+        }
         #endregion
     }
 }

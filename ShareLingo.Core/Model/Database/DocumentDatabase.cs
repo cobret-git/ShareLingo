@@ -43,10 +43,10 @@ namespace ShareLingo.Core.Model.Database
                 .Include(x => x.Course)
                 .Find(x => x.Course.Id == containerId, skip, limit);
         }
-        public IEnumerable<ExerciseContainer> GetExercises(int moduleId, int skip, int limit)
+        public IEnumerable<ExerciseBase> GetExercises(int moduleId, int skip, int limit)
         {
             if (connection == null) throw new ArgumentException("Connection must be opened.");
-            return connection.GetCollection<ExerciseContainer>(ExerciseContainer.COLLECTION_NAME)
+            return connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME)
                 .Include(x => x.Module)
                 .Find(x => x.Module.Id == moduleId, skip, limit);
         }
@@ -71,17 +71,17 @@ namespace ShareLingo.Core.Model.Database
             var relatedModulesHasNumber = connection.GetCollection<ModuleItem>(ModuleItem.COLLECTION_NAME)
                 .Include(x => x.Course)
                 .Find(x => x.Course.Id == module.Course.Id)
-                .Any(x => x.ModuleNumber == module.ModuleNumber);
+                .Any(x => x.Index == module.Index);
             if (relatedModulesHasNumber)
-                throw new ArgumentException($"The module with such number for container already exists ({module.ModuleNumber})");
+                throw new ArgumentException($"The module with such number for container already exists ({module.Index})");
             var id = (int)(connection.GetCollection<ModuleItem>(ModuleItem.COLLECTION_NAME).Insert(module));
             module.Id = id;
         }
-        public void AppendExercise(ExerciseContainer exercise)
+        public void AppendExercise(ExerciseBase exercise)
         {
             if (connection == null) throw new ArgumentException("Connection must be opened.");
             if (exercise.Module == null) throw new ArgumentNullException(nameof(exercise.Module));
-            var id = (int)(connection.GetCollection<ExerciseContainer>(ExerciseContainer.COLLECTION_NAME).Insert(exercise));
+            var id = (int)(connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).Insert(exercise));
             exercise.Id = id;
         }
         public void AppendResult(ResultContainer result)
@@ -118,11 +118,11 @@ namespace ShareLingo.Core.Model.Database
             var updated = db.GetCollection<ModuleItem>(ModuleItem.COLLECTION_NAME).Update(module);
             if (!updated) throw new InvalidOperationException("The enity wasn't updated.");
         }
-        public void UpdateExercise(ExerciseContainer exercise)
+        public void UpdateExercise(ExerciseBase exercise)
         {
             if (connection == null) throw new ArgumentException("Connection must be opened.");
             if (exercise.Module == null) throw new ArgumentNullException(nameof(exercise.Module));
-            var updated = connection.GetCollection<ExerciseContainer>(ExerciseContainer.COLLECTION_NAME).Update(exercise);
+            var updated = connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).Update(exercise);
             if (!updated) throw new InvalidOperationException("The entity wasn't updated.");
         }
         public void UpdateResult(ResultContainer result)
@@ -146,7 +146,7 @@ namespace ShareLingo.Core.Model.Database
             if (connection == null) throw new ArgumentException("Connection must be opened.");
             DeleteModuleCascadeHelper(connection, module);
         }
-        public void DeleteExercise(ExerciseContainer exercise)
+        public void DeleteExercise(ExerciseBase exercise)
         {
             if (connection == null) throw new ArgumentException("Connection must be opened.");
             DeleteExerciseCascadeHelper(connection, exercise);
@@ -166,7 +166,7 @@ namespace ShareLingo.Core.Model.Database
         }
         private void DeleteModuleCascadeHelper(LiteDatabase db, ModuleItem module)
         {
-            var relatedExrcises = db.GetCollection<ExerciseContainer>(ExerciseContainer.COLLECTION_NAME)
+            var relatedExrcises = db.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME)
                 .Include(x => x.Module)
                 .Find(x => x.Module.Id == module.Id);
             foreach (var exercise in relatedExrcises)
@@ -174,7 +174,7 @@ namespace ShareLingo.Core.Model.Database
             var deleted = db.GetCollection<ModuleItem>(ModuleItem.COLLECTION_NAME).Delete(module.Id);
             if (!deleted) throw new InvalidOperationException("The entity wasn't delted.");
         }
-        private void DeleteExerciseCascadeHelper(LiteDatabase db, ExerciseContainer exercise)
+        private void DeleteExerciseCascadeHelper(LiteDatabase db, ExerciseBase exercise)
         {
             var relatedResult = db.GetCollection<ResultContainer>(ResultContainer.COLLECTION_NAME)
                 .Include(x => x.Exercise).FindOne(x => x.Exercise.Id == exercise.Id);
@@ -183,7 +183,7 @@ namespace ShareLingo.Core.Model.Database
                 var _deleted = db.GetCollection<ResultContainer>(ResultContainer.COLLECTION_NAME).Delete(relatedResult.Id);
                 if (!_deleted) throw new InvalidOperationException("The entity wasn't deleted.");
             }
-            var deleted = db.GetCollection<ExerciseContainer>(ExerciseContainer.COLLECTION_NAME).Delete(exercise.Id);
+            var deleted = db.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).Delete(exercise.Id);
             if (!deleted) throw new InvalidOperationException("The entity wasn't deleted.");
         }
         #endregion

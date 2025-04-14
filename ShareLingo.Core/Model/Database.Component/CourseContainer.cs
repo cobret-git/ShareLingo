@@ -1,9 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using LiteDB;
+using NetForge.Core;
 
 namespace ShareLingo.Core.Model
 {
-    public class CourseContainer : ObservableObject
+    public class CourseContainer : ObservableObject, ICloneable<CourseContainer>
     {
         #region Consts
         public const string COLLECTION_NAME = "CourseContaienrs";
@@ -28,6 +29,23 @@ namespace ShareLingo.Core.Model
         public string ForeignLanguageCode { get => foreignLanguageCode; set { foreignLanguageCode = value; OnPropertyChanged(); } }
         public string CoverId { get => coverId; set { coverId = value; OnPropertyChanged(); } }
         public string DescriptionDocumentId { get => docId; set { docId = value; OnPropertyChanged(); } }
+        #endregion
+
+        #region Methods
+        public CourseContainer Clone()
+        {
+            return new CourseContainer()
+            {
+                Id = Id,
+                Name = Name,
+                Author = Author,
+                Year = Year,
+                NativeLanguageCode = NativeLanguageCode,
+                ForeignLanguageCode = ForeignLanguageCode,
+                CoverId = CoverId,
+                DescriptionDocumentId = DescriptionDocumentId
+            };
+        }
         #endregion
     }
 }
