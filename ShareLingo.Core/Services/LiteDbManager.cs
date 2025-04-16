@@ -15,15 +15,55 @@ namespace ShareLingo.Core.Services
         #endregion
 
         #region Methods
-        
-        public void SaveExercise(MissingTestExerciseItemViewModel exercise)
+        public ExerciseViewModelBase[] GetExercisesData(ModuleItemViewModel module)
         {
             if (connection == null) throw new ArgumentException("Connection must be opened.");
+            else if (module == null) throw new ArgumentException("Module must be set.");
+            var dataItems = connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).Find(x => x.Module.Id == module.Item.Id);
+            var result = new List<ExerciseViewModelBase>();
+            foreach (var item in dataItems)
+            {
+                ExerciseViewModelBase exercise;
+                switch (item.Type)
+                {
+                    case ExerciseType.MissingText:
+                        exercise = new MissingTextExerciseViewModel(item as MissingTextExercise);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                result.Add(exercise);
+            }
+            return result.ToArray();
+        }
 
+        /// <summary>
+        /// Saves the exercise data to the database.
+        /// </summary>
+        /// <param name="exercise"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public void SaveExercise(MissingTextExerciseViewModel exercise)
+        {
+            if (connection == null) throw new ArgumentException("Connection must be opened.");
+            else if (exercise.Item.Module == null) throw new ArgumentException("Module must be set.");
 
+            if (exercise.Item.Id != default)
+            {
+                connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).Update(exercise.Item);
+                var removedItems = connection.GetCollection<ExerciseSubItemBase>(ExerciseSubItemBase.COLLECTION_NAME)
+                    .Find(x => x.Exercise.Id == exercise.Item.Id)
+                    .Where(x => !exercise.Items.Any(c => c.Item.Id == x.Id)).ToArray();
+                foreach (var item in removedItems)
+                    connection.GetCollection<ExerciseSubItemBase>(ExerciseSubItemBase.COLLECTION_NAME).Delete(item.Id);
+            }    
+            else
+                exercise.Item.Id = (int)(connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).Insert(exercise.Item));
 
-            if (exercise.Id != default) connection.GetCollection<MissingTextExercise>(MissingTextExercise.COLLECTION_NAME).Update(exercise);
-            else exercise.Id = (int)(connection.GetCollection<MissingTextExercise>(MissingTextExercise.COLLECTION_NAME).Insert(exercise));
+            foreach(var item in exercise.Items)
+            {
+                if (item.Item.Id != default) connection.GetCollection<ExerciseSubItemBase>(ExerciseSubItemBase.COLLECTION_NAME).Update(item.Item);
+                else item.Item.Id = (int)(connection.GetCollection<ExerciseSubItemBase>(ExerciseSubItemBase.COLLECTION_NAME).Insert(item.Item));
+            }
         }
 
         /// <summary>
@@ -32,6 +72,7 @@ namespace ShareLingo.Core.Services
         /// <param name="skip"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentException"></exception>
         public ModuleItemViewModel[] GetModulesData(CourseContainerViewModel course, int skip, int limit)
         {
@@ -148,6 +189,11 @@ namespace ShareLingo.Core.Services
             return result.ToArray();
         }
 
+        /// <summary>
+        /// Saves the course data to the database. Ensures that the course's name is unique.s
+        /// </summary>
+        /// <param name="item"></param>
+        /// <exception cref="ArgumentException"></exception>
         public void SaveCourseData(CourseContainerViewModel item)
         {
             if (connection == null) throw new ArgumentException("Connection must be opened.");
@@ -182,17 +228,71 @@ namespace ShareLingo.Core.Services
             }
             connection.GetCollection<CourseContainer>(CourseContainer.COLLECTION_NAME).Update(item.Item);
         }
-        //public void DeleteCourseData(CourseContainerViewModel item)
-        //{
-        //    if (connection == null) throw new ArgumentException("Connection must be opened.");
-        //    var fs = connection.GetStorage<string>();
-        //    if (!string.IsNullOrWhiteSpace(item.Item.DescriptionDocumentId))
-        //        fs.Delete(item.Item.DescriptionDocumentId);
-        //    if (!string.IsNullOrWhiteSpace(item.Item.CoverId))
-        //        fs.Delete(item.Item.CoverId);
-        //    connection.GetCollection<CourseContainer>(CourseContainer.COLLECTION_NAME).Delete(item.Item.Id);
-        //    item.Dispose();
-        //}
+
+        /// <summary>
+        /// Deletes the course data from the database. Deletes all related modules and their data.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void DeleteCourseData(int id)
+        {
+            if (connection == null) throw new ArgumentException("Connection must be opened.");
+            var fs = connection.GetStorage<string>();
+            var course = connection.GetCollection<CourseContainer>(CourseContainer.COLLECTION_NAME).FindById(id);
+            if (course == null) throw new ArgumentNullException(nameof(course), "Course not found.");
+            if (!string.IsNullOrWhiteSpace(course.DescriptionDocumentId))
+                fs.Delete(course.DescriptionDocumentId);
+            if (!string.IsNullOrWhiteSpace(course.CoverId))
+                fs.Delete(course.CoverId);
+            connection.GetCollection<CourseContainer>(CourseContainer.COLLECTION_NAME).Delete(course.Id);
+            var relatedModules = connection.GetCollection<ModuleItem>(ModuleItem.COLLECTION_NAME).Find(x => x.Course.Id == course.Id);
+            foreach (var module in relatedModules) DeleteModuleData(module.Id);
+        }
+
+        /// <summary>
+        /// Deletes the module data from the database. Deletes all related exercises and their data.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void DeleteModuleData(int id)
+        {
+            if (connection == null) throw new ArgumentException("Connection must be opened.");
+            var fs = connection.GetStorage<string>();
+            var module = connection.GetCollection<ModuleItem>(ModuleItem.COLLECTION_NAME).FindById(id);
+            if (module == null) throw new ArgumentNullException(nameof(module), "Module not found.");
+            if (!string.IsNullOrWhiteSpace(module.CoverId)) fs.Delete(module.CoverId);
+            if (!string.IsNullOrWhiteSpace(module.TheoryDocumentId)) fs.Delete(module.TheoryDocumentId);
+            connection.GetCollection<ModuleItem>(ModuleItem.COLLECTION_NAME).Delete(id);
+            var relatedExercises = connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).Find(x => x.Module.Id == module.Id);
+            foreach (var exercise in relatedExercises) DeleteExercise(exercise.Id);
+        }
+
+        /// <summary>
+        /// Deletes the exercise data from the database. Deletes all related subitems and their data.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public void DeleteExercise(int id)
+        {
+            if (connection == null) throw new ArgumentException("Connection must be opened.");
+            var exercise = connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).FindById(id);
+            
+            if (exercise is MissingTextExercise missingText) DeleteMissingTextExercise(missingText, connection);
+        }
+        #endregion
+
+        #region Helpers
+        private void DeleteMissingTextExercise(MissingTextExercise exercise, LiteDatabase connection)
+        {
+            var relatedExercises = connection.GetCollection<ExerciseSubItemBase>(ExerciseSubItemBase.COLLECTION_NAME)
+                .Find(x => x.Exercise.Id == exercise.Id)
+                .OfType<MissingTextExerciseSubItem>().ToArray();
+            foreach (var item in relatedExercises)
+                connection.GetCollection<ExerciseSubItemBase>(ExerciseSubItemBase.COLLECTION_NAME).Delete(item.Id);
+            connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).Delete(exercise.Id);
+        }
         #endregion
     }
 }
