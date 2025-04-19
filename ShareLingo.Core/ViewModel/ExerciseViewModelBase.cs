@@ -6,13 +6,15 @@ namespace ShareLingo.Core.ViewModel
     public abstract class ExerciseViewModelBase : ObservableObject, IDisposable
     {
         #region Constructors
-        public ExerciseViewModelBase(ExerciseBase item)
+        public ExerciseViewModelBase(ExerciseBase item, ModuleItemViewModel moduleItem)
         {
             Item = item;
+            ModuleItem = moduleItem;
         }
         #endregion
 
         #region Properties
+        public ModuleItemViewModel ModuleItem { get; }
         public ExerciseBase Item { get; }
         #endregion
 

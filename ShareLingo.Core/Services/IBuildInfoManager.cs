@@ -9,9 +9,12 @@ namespace ShareLingo.Core.Services
         Version Version { get; }
         IFileSystem FileSystem { get; }
         IFilePicker FilePicker { get; }
-        string MediaDirectory { get; }
+
+        /// <summary>
+        /// The path to the database file.
+        /// </summary>
+        string DatabasePath { get; }
         string LogDirectory { get; }
-        string DataDirectory { get; }
         #endregion
 
         #region Methods

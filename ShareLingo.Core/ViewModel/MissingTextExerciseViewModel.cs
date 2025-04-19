@@ -6,13 +6,13 @@ namespace ShareLingo.Core.ViewModel
     public class MissingTextExerciseViewModel : ExerciseViewModelBase
     {
         #region Constructors
-        public MissingTextExerciseViewModel(MissingTextExercise item) : base(item)
+        public MissingTextExerciseViewModel(ExerciseBase item, ModuleItemViewModel moduleItem) : base(item, moduleItem)
         {
         }
         #endregion
 
         #region Properties
-        public ObservableCollection<MissingTestExerciseItemViewModel> Items { get; init; } = new();
+        public ObservableCollection<MissingTextExerciseItemViewModel> Items { get; set; } = new();
         #endregion
 
         #region Methods

@@ -2,10 +2,10 @@
 
 namespace ShareLingo.Core.ViewModel
 {
-    public class MissingTestExerciseItemViewModel : ExerciseSubItemViewModelBase
+    public class MissingTextExerciseItemViewModel : ExerciseSubItemViewModelBase
     {
         #region Constructors
-        public MissingTestExerciseItemViewModel(MissingTextExerciseSubItem item) : base(item)
+        public MissingTextExerciseItemViewModel(ExerciseSubItemBase item, ExerciseViewModelBase parent) : base(item, parent)
         {
         }
         #endregion

@@ -12,7 +12,6 @@ namespace ShareLingo.Core.Model
 
         #region Fields
         private string name = string.Empty;
-        private string author = string.Empty;
         private int index;
         private string coverId = string.Empty;
         private string theoryDocumentId = string.Empty;
@@ -30,11 +29,6 @@ namespace ShareLingo.Core.Model
         /// The parent course of the module.
         /// </summary>
         [BsonRef(CourseContainer.COLLECTION_NAME)] public CourseContainer Course { get; set; } = null!;
-
-        /// <summary>
-        /// The module's author.
-        /// </summary>
-        public string Author { get => author; set { author = value; OnPropertyChanged(); } }
 
         /// <summary>
         /// The unique module's number.
@@ -59,7 +53,6 @@ namespace ShareLingo.Core.Model
             {
                 Id = Id,
                 Name = Name,
-                Author = Author,
                 Index = Index,
                 Course = Course,
                 CoverId = CoverId,
