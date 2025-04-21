@@ -19,6 +19,10 @@ namespace ShareLingo.Core.ViewModel
         public override void Dispose()
         {
         }
+        public override IEnumerable<ExerciseSubItemViewModelBase> GetSubItems()
+        {
+            return Items;
+        }
         #endregion
     }
 }

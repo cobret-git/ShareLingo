@@ -22,5 +22,14 @@ namespace ShareLingo.Core.Model
         public int AttemptCount { get => attemptCount; set { attemptCount = value; OnPropertyChanged(); } }
         public double Score { get => score; set { score = value; OnPropertyChanged(); } }
         #endregion
+
+        #region Methods
+        public double GetPriotity()
+        {
+            var daysSince = (DateTime.Now - LastAttempt).TotalDays;
+            double decay = Math.Exp(-0.1 * daysSince); // You can tweak lambda
+            return (1.0 - Score) * decay;
+        }
+        #endregion
     }
 }

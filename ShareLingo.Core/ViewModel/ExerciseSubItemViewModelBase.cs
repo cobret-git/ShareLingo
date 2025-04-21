@@ -18,6 +18,8 @@ namespace ShareLingo.Core.ViewModel
         public ExerciseViewModelBase Parent { get; }
         public ExerciseSubItemBase Item { get; }
         public ObservableCollection<AttachedTagViewModel> Tags { get; set; } = new();
+        public bool Correct { get; set; } = false;
+        public int AttemptsCount { get; set; }
         #endregion
 
         #region Methods

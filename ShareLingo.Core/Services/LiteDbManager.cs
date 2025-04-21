@@ -29,6 +29,7 @@ namespace ShareLingo.Core.Services
             connection = new LiteDatabase($"FileName={filePath};Password={password}");
         }
 
+
         public CourseContainerViewModel[] GetCourseData(int skip, int limit)
         {
             if (connection == null) throw new ArgumentException("Connection must be opened.");
@@ -92,6 +93,63 @@ namespace ShareLingo.Core.Services
                 else throw new NotImplementedException($"Exercise type {item.GetType().Name} is not implemented.");
             }
             return result.ToArray();
+        }
+        public ExerciseSubItemViewModelBase[] GetItemsToRepeat(CourseContainerViewModel course, int limit)
+        {
+            if (connection == null) throw new ArgumentException("Connection must be opened.");
+            var tags = connection.GetCollection<Tag>(Tag.COLLECTION_NAME)
+                .Include(x => x.Course)
+                .Find(x => x.Course.Id == course.Item.Id);
+
+            var bestTagId = -1;
+            double bestTagPriority = -1;
+            List<ExerciseSubItemViewModelBase> bestItems = new();
+
+            foreach (var tag in tags)
+            {
+                // Get all relations for this tag
+                var tagRelations = connection.GetCollection<TagRelation>(TagRelation.COLLECTION_NAME)
+                    .Include(x => x.ExerciseItem).Include(x => x.RelatedTag).Include(x => x.Exercise)
+                    .Find(tr => tr.RelatedTag.Id == tag.Id)
+                    .Where(tr => tr.ExerciseItem != null)
+                    .ToList();
+
+                // Get distinct ExerciseSubItems
+                var items = tagRelations
+                    .Select(tr => tr.ExerciseItem)
+                    .Distinct()
+                    .ToList();
+
+                if (items.Count == 0)
+                    continue;
+
+                // Compute average priority for this tag group
+                var priorities = items
+                    .Select(x => x.GetPriotity())
+                    .ToList();
+
+                double avgPriority = priorities.Average();
+
+                if (avgPriority > bestTagPriority)
+                {
+                    bestTagPriority = avgPriority;
+
+                    var _items = items
+                        .OrderByDescending(x => x.GetPriotity())
+                        .Take(limit)
+                        .ToList();
+                    foreach(var item in _items)
+                    {
+                        var tagRelation = tagRelations.FirstOrDefault(x => x.ExerciseItem.Id == item.Id);
+
+                        if (item is MissingTextExerciseSubItem missingTextSubItem) 
+                            bestItems.Add(new MissingTextExerciseItemViewModel(missingTextSubItem, null!));
+                    }
+
+                    bestTagId = tag.Id;
+                }
+            }
+            return bestItems.ToArray();
         }
         public AttachedTagViewModel? GetTag(string? tagName, ExerciseSubItemViewModelBase subItem)
         {
@@ -232,7 +290,21 @@ namespace ShareLingo.Core.Services
             if (connection == null) throw new ArgumentException("Connection must be opened.");
             else if (exercise.Item.Module == null) throw new ArgumentException("Module must be set.");
             else if (exercise.Item.Id == default) throw new ArgumentException("Exercise must be saved first.");
-            connection.GetCollection<ExerciseBase>(ExerciseBase.COLLECTION_NAME).Update(exercise.Item);
+
+            var subItems = exercise.GetSubItems();
+            foreach(var subItem in subItems)
+            {
+                if (subItem.Item.Id == default) throw new ArgumentException("Exercise subitem must be saved first.");
+                var subItemFromDb = connection.GetCollection<ExerciseSubItemBase>(ExerciseSubItemBase.COLLECTION_NAME).FindById(subItem.Item.Id);
+                var basedAdjustment = 0.2d;
+                var maxScore = 1.0d;
+                double attemptFactor = subItem.AttemptsCount switch { 1 => 1.0d, 2 => 0.8d, 3 => 0.6d, _ => 0.1d };
+                var delta = basedAdjustment * attemptFactor;
+                subItemFromDb.Score = Math.Min(maxScore, subItemFromDb.Score + delta);
+                subItemFromDb.LastAttempt = DateTime.Now;
+                subItemFromDb.AttemptCount += subItem.AttemptsCount;
+                connection.GetCollection<ExerciseSubItemBase>(ExerciseSubItemBase.COLLECTION_NAME).Update(subItem.Item);
+            }
         }
         public void SaveTag(AttachedTagViewModel item)
         {
@@ -325,6 +397,11 @@ namespace ShareLingo.Core.Services
         #endregion
 
         #region Helpers
+        private double CalculatePriority(double score, DateTime lastAttempt, double lambda = 0.1)
+        {
+            double days = (DateTime.Now - lastAttempt).TotalDays;
+            return (1 - score) * Math.Exp(-lambda * days);
+        }
         private void DeleteMissingTextExercise(MissingTextExercise exercise, LiteDatabase connection)
         {
             var relatedExercises = connection.GetCollection<ExerciseSubItemBase>(ExerciseSubItemBase.COLLECTION_NAME)

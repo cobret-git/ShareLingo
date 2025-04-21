@@ -20,6 +20,7 @@ namespace ShareLingo.Core.ViewModel
 
         #region Methods
         public abstract void Dispose();
+        public abstract IEnumerable<ExerciseSubItemViewModelBase> GetSubItems();
         #endregion
     }
 }

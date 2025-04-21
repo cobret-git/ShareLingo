@@ -49,6 +49,8 @@ namespace ShareLingo.Core.Services
         /// <exception cref="NotImplementedException"></exception>
         ExerciseViewModelBase[] GetExercisesData(ModuleItemViewModel module);
 
+        ExerciseSubItemViewModelBase[] GetItemsToRepeat(CourseContainerViewModel course, int limit);
+
         /// <summary>
         /// Retreives the tag data from the database related to the <paramref name="subItem"/>. If relation does not exists, it creates a new one.
         /// </summary>
@@ -81,6 +83,14 @@ namespace ShareLingo.Core.Services
         /// <param name="exercise"></param>
         /// <exception cref="ArgumentException"></exception>
         void SaveExercise(MissingTextExerciseViewModel exercise);
+
+
+        /// <summary>
+        /// Saves the exercise progress to the database.
+        /// </summary>
+        /// <param name="exercise"></param>
+        /// <exception cref="ArgumentException"></exception>
+        void SaveExerciseProgress(ExerciseViewModelBase exercise);
 
         /// <summary>
         /// Saves the tag data to the database. Ensures that the tag's name is unique within the course and module.
