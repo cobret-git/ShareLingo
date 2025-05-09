@@ -3,28 +3,27 @@ using NetForge.Core;
 
 namespace ShareLingo.Core.ViewModel
 {
-    public class DialogViewModelBase : ObservableObject, IDialogViewModel
+    public abstract class DialogViewModelBase : ObservableObject, IDialogViewModel
     {
         #region Fields
-
+        private string title = string.Empty;
+        private bool primaryButtonEnabled = true;
+        private bool secondaryButtonEnabled = true;
         #endregion
 
         #region Properties
-        public string Title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Title { get => title; set { title = value; OnPropertyChanged(); } }
         public bool IsDisposed { get; protected set; }
-        public string? PrimaryButtonText => throw new NotImplementedException();
-        public bool PrimaryButtonEnabled => throw new NotImplementedException();
-        public string? SecondaryButtonText => throw new NotImplementedException();
-        public bool SecondaryButtonEnabled => throw new NotImplementedException();
-        public string? CloseButtonText => throw new NotImplementedException();
-        public IViewModelDataParameter? DataParameter { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string? PrimaryButtonText { get; protected init; }
+        public bool PrimaryButtonEnabled { get => primaryButtonEnabled; protected set { primaryButtonEnabled = value; OnPropertyChanged(); } }
+        public string? SecondaryButtonText { get; protected init; }
+        public bool SecondaryButtonEnabled { get => secondaryButtonEnabled; protected set { secondaryButtonEnabled = value; OnPropertyChanged(); } }
+        public string? CloseButtonText { get; protected init; }
+        public virtual IViewModelDataParameter? DataParameter { get; set; }
         #endregion
 
-
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        #region Methods
+        public abstract void Dispose();
+        #endregion
     }
 }

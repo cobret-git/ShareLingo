@@ -4,7 +4,7 @@ using ShareLingo.Core.Model;
 
 namespace ShareLingo.Core.ViewModel
 {
-    public class ModuleItemViewModel : ObservableObject, IDisposable, IViewModelDataParameter
+    public class ModuleItemViewModel : ObservableObject, IDisposable, IViewModelDataParameter, ICloneable<ModuleItemViewModel>, IMergable<ModuleItemViewModel>
     {
         #region Constructors
         public ModuleItemViewModel(ModuleItem item, CourseContainerViewModel course)
@@ -22,6 +22,21 @@ namespace ShareLingo.Core.ViewModel
         #endregion
 
         #region Methods
+        public ModuleItemViewModel Clone()
+        {
+            return new ModuleItemViewModel(Item.Clone(), Course)
+            {
+                Cover = Cover?.Clone(),
+                Theory = Theory?.Clone()
+            };
+        }
+        public void Merge(ModuleItemViewModel other)
+        {
+            if (other == null) throw new ArgumentNullException(nameof(other));
+            Item.Merge(other.Item);
+            if (other.Cover != null) Cover?.Merge(other.Cover);
+            if (other.Theory != null) Theory?.Merge(other.Theory);
+        }
         public void Dispose()
         {
             if (Cover != null) Cover.Dispose();

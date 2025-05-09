@@ -13,11 +13,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\Xaml\Styles.xaml" />
     <None Remove="Resources\Xaml\Templates.xaml" />
     <None Remove="View\CourseBrowser.xaml" />
     <None Remove="View\CourseEditor.xaml" />
     <None Remove="View\CourseViewer.xaml" />
     <None Remove="View\MainWindow.xaml" />
+    <None Remove="View\ModuleEditor.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,14 +45,25 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Markdown" Version="7.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.3916" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250401001" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
-    <PackageReference Include="NetForge.WinUI" Version="1.0.5" />
+    <PackageReference Include="NetForge.WinUI" Version="1.0.7" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShareLingo.Core\ShareLingo.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\Xaml\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="View\ModuleEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="View\CourseViewer.xaml">

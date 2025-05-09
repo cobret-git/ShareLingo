@@ -49,7 +49,7 @@
                             </StackPanel>
                             <DropDownButton.Flyout>
                                 <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                                    <MenuFlyoutItem Text="Create"/>
+                                    <MenuFlyoutItem Text="Create" Command="{Binding CreateModuleCommand}"/>
                                     <MenuFlyoutItem Text="Import"/>
                                 </MenuFlyout>
                             </DropDownButton.Flyout>

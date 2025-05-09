@@ -17,7 +17,13 @@ namespace ShareLingo.WinUI
         {
             Services = ConfigureServices();
             Services.GetService<IDataManager>()?.Open();
+
+            this.UnhandledException += App_UnhandledException;
             this.InitializeComponent();
+        }
+        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -49,6 +55,7 @@ namespace ShareLingo.WinUI
             services.AddTransient<CourseBrowserViewModel>();
             services.AddTransient<CourseEditorViewModel>();
             services.AddTransient<CourseViewerViewModel>();
+            services.AddTransient<ModuleEditorViewModel>();
 
             return services.BuildServiceProvider();
         }

@@ -180,4 +180,112 @@
   <data name="mainWindow_courseBrowserNavigationMenuItem" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="moduleEditor_coverHintText" xml:space="preserve">
+    <value>Your module’s image is the first thing learners see—it should help them instantly feel what the module is about. Choose a picture that’s simple, relevant, and visually easy to recognize, even at a small size.</value>
+  </data>
+  <data name="moduleEditor_error_emptyModuleName" xml:space="preserve">
+    <value>The module's name cannot be empty.</value>
+  </data>
+  <data name="moduleEditor_indexHeader" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="moduleEditor_indexHintText" xml:space="preserve">
+    <value>The index decides when your module becomes available. Lower numbers come first, and users must finish earlier modules to unlock the later ones—like levels in a game or chapters in a book.</value>
+  </data>
+  <data name="moduleEditor_nameHeader" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="moduleEditor_nameHintText" xml:space="preserve">
+    <value>Be specific and choose words that clearly show what the module is about.</value>
+  </data>
+  <data name="moduleEditor_namePlaceholderText" xml:space="preserve">
+    <value>e.g. Common Phrases for Travel</value>
+  </data>
+  <data name="moduleEditor_coverHeader" xml:space="preserve">
+    <value>Cover</value>
+  </data>
+  <data name="moduleEditor_importCovertButtonText" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="moduleEditor_deleteCoverButtonText" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="moduleEditor_theoryHeader" xml:space="preserve">
+    <value>Theory</value>
+  </data>
+  <data name="moduleEditor_importDocumentButtonText" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="moduleEditor_deleteDocumentButtonText" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="generalContent_saveButtonText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="generalContent_cancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="moduleEditor_header" xml:space="preserve">
+    <value>Module editor</value>
+  </data>
+  <data name="modulesEditor_generalHintHeader" xml:space="preserve">
+    <value>Keep your learner in mind</value>
+  </data>
+  <data name="moduleEditor_generalHintText" xml:space="preserve">
+    <value>When creating a module, think like someone who’s learning this for the first time. Be clear, focused, and friendly. Make each part - the name, theory, exercises, and images - support one goal: helping someone understand and practice something new, one step at a time.</value>
+  </data>
+  <data name="moduleEditor_nameExtraHintText" xml:space="preserve">
+    <value>Try to keep the name short but meaningful. Ask yourself:
+If I were a learner, would this title make me want to open the module? Would I know what to expect?
+For example:
+✅ Ordering Food at a Restaurant
+✅ Past Tense Verbs in Spanish
+✅ Common Phrases for Travel
+🚫 Lesson 3
+🚫 Grammar Stuff</value>
+  </data>
+  <data name="moduleEditor_indexExtraHintText" xml:space="preserve">
+    <value>Ask yourself:
+Does this module teach something foundational? ➜ Give it a lower number.
+Does it build on skills from earlier modules? ➜ Put it later in the sequence.
+Would a learner be confused if they started here? ➜ Move it down the list.
+For example:
+✅ 1 — Basic Greetings
+✅ 2 — Asking for Directions
+✅ 3 — Making Hotel Reservations
+Avoid skipping steps or placing advanced content too early. Think like a learner:
+What would I need to know first before this module makes sense?</value>
+  </data>
+  <data name="moduleEditor_coverExtraHintText" xml:space="preserve">
+    <value>Ask yourself:
+If I saw this image alone, would I get a good idea of what the module is about—and would I want to click it?
+✔️ Use a square or circular image
+✔️ Aim for around 1024x1024 px or smaller
+✔️ Stick to clean visuals, no tiny text or clutter
+✔️ Match the theme of the module (food, travel, grammar, etc.)
+For example:
+✅ A plate of food for Ordering at a Restaurant
+✅ A map or suitcase for Travel Vocabulary
+✅ A speech bubble for Basic Phrases
+Avoid these:
+🚫 Random decorative images
+🚫 Photos with too much detail or noise
+🚫 Unrelated icons just to “fill the space”</value>
+  </data>
+  <data name="moduleEditor_theoryExtraHintText" xml:space="preserve">
+    <value>Ask yourself:
+Would this description make a learner feel excited and ready to dive in?
+✅ Use Markdown (.md) format — you can write it in the app or import it from another editor
+✅ Keep it short and skimmable — 2 to 5 sentences is usually enough
+✅ Highlight what learners will do, learn, or practice
+You can use basic Markdown formatting to make it nicer:
+**bold** for key ideas
+*italics* for emphasis
+- or * for bullet lists
+# for headings if needed
+Avoid:
+🚫 Descriptions that are too vague (e.g., "This is a lesson about food.")
+🚫 Overly long explanations or grammar-heavy text
+🚫 Forgetting to say what the learner will gain</value>
+  </data>
 </root>

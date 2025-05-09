@@ -187,6 +187,24 @@ namespace ShareLingo.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string generalContent_cancelButtonText {
+            get {
+                return ResourceManager.GetString("generalContent_cancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string generalContent_saveButtonText {
+            get {
+                return ResourceManager.GetString("generalContent_saveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An unhandled error at canceling course changes..
         /// </summary>
         public static string log_error_courseEditor_cancelFailedUnhandled {
@@ -246,6 +264,225 @@ namespace ShareLingo.Core.Resources {
         public static string mainWindow_courseBrowserNavigationMenuItem {
             get {
                 return ResourceManager.GetString("mainWindow_courseBrowserNavigationMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ask yourself:
+        ///If I saw this image alone, would I get a good idea of what the module is about—and would I want to click it?
+        ///✔️ Use a square or circular image
+        ///✔️ Aim for around 1024x1024 px or smaller
+        ///✔️ Stick to clean visuals, no tiny text or clutter
+        ///✔️ Match the theme of the module (food, travel, grammar, etc.)
+        ///For example:
+        ///✅ A plate of food for Ordering at a Restaurant
+        ///✅ A map or suitcase for Travel Vocabulary
+        ///✅ A speech bubble for Basic Phrases
+        ///Avoid these:
+        ///🚫 Random decorative images
+        ///🚫 Photo [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string moduleEditor_coverExtraHintText {
+            get {
+                return ResourceManager.GetString("moduleEditor_coverExtraHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cover.
+        /// </summary>
+        public static string moduleEditor_coverHeader {
+            get {
+                return ResourceManager.GetString("moduleEditor_coverHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your module’s image is the first thing learners see—it should help them instantly feel what the module is about. Choose a picture that’s simple, relevant, and visually easy to recognize, even at a small size..
+        /// </summary>
+        public static string moduleEditor_coverHintText {
+            get {
+                return ResourceManager.GetString("moduleEditor_coverHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string moduleEditor_deleteCoverButtonText {
+            get {
+                return ResourceManager.GetString("moduleEditor_deleteCoverButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string moduleEditor_deleteDocumentButtonText {
+            get {
+                return ResourceManager.GetString("moduleEditor_deleteDocumentButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The module&apos;s name cannot be empty..
+        /// </summary>
+        public static string moduleEditor_error_emptyModuleName {
+            get {
+                return ResourceManager.GetString("moduleEditor_error_emptyModuleName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When creating a module, think like someone who’s learning this for the first time. Be clear, focused, and friendly. Make each part - the name, theory, exercises, and images - support one goal: helping someone understand and practice something new, one step at a time..
+        /// </summary>
+        public static string moduleEditor_generalHintText {
+            get {
+                return ResourceManager.GetString("moduleEditor_generalHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Module editor.
+        /// </summary>
+        public static string moduleEditor_header {
+            get {
+                return ResourceManager.GetString("moduleEditor_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string moduleEditor_importCovertButtonText {
+            get {
+                return ResourceManager.GetString("moduleEditor_importCovertButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string moduleEditor_importDocumentButtonText {
+            get {
+                return ResourceManager.GetString("moduleEditor_importDocumentButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ask yourself:
+        ///Does this module teach something foundational? ➜ Give it a lower number.
+        ///Does it build on skills from earlier modules? ➜ Put it later in the sequence.
+        ///Would a learner be confused if they started here? ➜ Move it down the list.
+        ///For example:
+        ///✅ 1 — Basic Greetings
+        ///✅ 2 — Asking for Directions
+        ///✅ 3 — Making Hotel Reservations
+        ///Avoid skipping steps or placing advanced content too early. Think like a learner:
+        ///What would I need to know first before this module makes sense?.
+        /// </summary>
+        public static string moduleEditor_indexExtraHintText {
+            get {
+                return ResourceManager.GetString("moduleEditor_indexExtraHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Index.
+        /// </summary>
+        public static string moduleEditor_indexHeader {
+            get {
+                return ResourceManager.GetString("moduleEditor_indexHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The index decides when your module becomes available. Lower numbers come first, and users must finish earlier modules to unlock the later ones—like levels in a game or chapters in a book..
+        /// </summary>
+        public static string moduleEditor_indexHintText {
+            get {
+                return ResourceManager.GetString("moduleEditor_indexHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Try to keep the name short but meaningful. Ask yourself:
+        ///If I were a learner, would this title make me want to open the module? Would I know what to expect?
+        ///For example:
+        ///✅ Ordering Food at a Restaurant
+        ///✅ Past Tense Verbs in Spanish
+        ///✅ Common Phrases for Travel
+        ///🚫 Lesson 3
+        ///🚫 Grammar Stuff.
+        /// </summary>
+        public static string moduleEditor_nameExtraHintText {
+            get {
+                return ResourceManager.GetString("moduleEditor_nameExtraHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string moduleEditor_nameHeader {
+            get {
+                return ResourceManager.GetString("moduleEditor_nameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Be specific and choose words that clearly show what the module is about..
+        /// </summary>
+        public static string moduleEditor_nameHintText {
+            get {
+                return ResourceManager.GetString("moduleEditor_nameHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to e.g. Common Phrases for Travel.
+        /// </summary>
+        public static string moduleEditor_namePlaceholderText {
+            get {
+                return ResourceManager.GetString("moduleEditor_namePlaceholderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ask yourself:
+        ///Would this description make a learner feel excited and ready to dive in?
+        ///✅ Use Markdown (.md) format — you can write it in the app or import it from another editor
+        ///✅ Keep it short and skimmable — 2 to 5 sentences is usually enough
+        ///✅ Highlight what learners will do, learn, or practice
+        ///You can use basic Markdown formatting to make it nicer:
+        ///**bold** for key ideas
+        ///*italics* for emphasis
+        ///- or * for bullet lists
+        ///# for headings if needed
+        ///Avoid:
+        ///🚫 Descriptions that are too vague (e.g., &quot;T [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string moduleEditor_theoryExtraHintText {
+            get {
+                return ResourceManager.GetString("moduleEditor_theoryExtraHintText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theory.
+        /// </summary>
+        public static string moduleEditor_theoryHeader {
+            get {
+                return ResourceManager.GetString("moduleEditor_theoryHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep your learner in mind.
+        /// </summary>
+        public static string modulesEditor_generalHintHeader {
+            get {
+                return ResourceManager.GetString("modulesEditor_generalHintHeader", resourceCulture);
             }
         }
     }

@@ -4,7 +4,7 @@ using NetForge.Core;
 
 namespace ShareLingo.Core.Model
 {
-    public class ModuleItem : ObservableObject, ICloneable<ModuleItem>
+    public class ModuleItem : ObservableObject, ICloneable<ModuleItem>, IMergable<ModuleItem>
     {
         #region Consts
         public const string COLLECTION_NAME = "ModuleItems";
@@ -58,6 +58,16 @@ namespace ShareLingo.Core.Model
                 CoverId = CoverId,
                 TheoryDocumentId = TheoryDocumentId
             };
+        }
+        public void Merge(ModuleItem other)
+        {
+            if (other == null) throw new ArgumentNullException(nameof(other));
+            Id = other.Id;
+            Name = other.Name;
+            Index = other.Index;
+            Course = other.Course;
+            CoverId = other.CoverId;
+            TheoryDocumentId = other.TheoryDocumentId;
         }
         #endregion
     }

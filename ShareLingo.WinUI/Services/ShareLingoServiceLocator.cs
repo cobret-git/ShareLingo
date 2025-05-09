@@ -15,6 +15,7 @@ namespace ShareLingo.WinUI.Services
             {typeof(CourseBrowserViewModel), typeof(CourseBrowser) },
             {typeof(CourseEditorViewModel), typeof(CourseEditor) },
             {typeof(CourseViewerViewModel), typeof(CourseViewer) },
+            {typeof(ModuleEditorViewModel), typeof(ModuleEditor) },
         };
         #endregion
 

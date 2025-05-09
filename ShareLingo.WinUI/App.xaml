@@ -3,13 +3,18 @@
     x:Class="ShareLingo.WinUI.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:netForgeConverters="using:NetForge.WinUI.Converters"
     xmlns:local="using:ShareLingo.WinUI">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="/Resources/Xaml/Styles.xaml"/>
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
+            <netForgeConverters:BooleanToInverseVisibilityConverter x:Key="BooleanToInverseVisibilityConverter"/>
+            <netForgeConverters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <netForgeConverters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
             <!-- Other app resources here -->
         </ResourceDictionary>
     </Application.Resources>
