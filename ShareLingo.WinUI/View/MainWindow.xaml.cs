@@ -2,15 +2,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using NetForge.Core;
-using NetForge.Core.EventArgs;
-using ShareLingo.WinUI.Extensions;
-using ShareLingo.WinUI.Services;
-using ShareLingo.WinUI.ViewModel;
-using ShareLingo.WinUI.ViewModel.Component;
+using NetForge.WinUI;
+using ShareLingo.Core.Services;
+using ShareLingo.Core.ViewModel;
+using ShareLingo.WinUI.Components;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace ShareLingo.WinUI.View
 {
@@ -18,6 +19,7 @@ namespace ShareLingo.WinUI.View
     {
         #region Fields
         private readonly IEventAggregator eventAggregator;
+        private readonly IServiceLocator serviceLocator;
         private readonly Dictionary<Type, int> subscribeTokens = new();
         private readonly Dictionary<Type, Type> viewModelsToView = new();
         #endregion
@@ -26,13 +28,16 @@ namespace ShareLingo.WinUI.View
         public MainWindow()
         {
             this.eventAggregator = App.Current.Services.GetService<IEventAggregator>()!;
-
-            viewModelsToView.Add(typeof(CourseBrowserViewModel), typeof(CourseBrowserPage));
-            viewModelsToView.Add(typeof(CourseInspectorViewModel), typeof(CourseInspectorPage));
+            this.serviceLocator = App.Current.Services.GetService<IServiceLocator>()!;
 
             this.ExtendsContentIntoTitleBar = true;
+            this.SetTitleBar(AppTitleBar);
+
             this.InitializeComponent();
+            var filePicker = App.Current.Services.GetService<IBuildInfoManager>()?.FilePicker as FilePicker;
+            if (filePicker != null) filePicker.MainWindowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
             RootGrid.DataContext = this;
+
             subscribeTokens.Add(typeof(PageNavigationRequest),
                 eventAggregator.SubscribeAction<PageNavigationRequest>(OnPageNavigationRequestReceived));
         }
@@ -43,33 +48,33 @@ namespace ShareLingo.WinUI.View
         #endregion
 
         #region Methods
-        public void NavigateToNext(IPageViewModel viewModel, IViewModelDataParameter? dataParameter = null)
+        public void NavigateToNext(Type viewModelType, IViewModelDataParameter? dataParameter = null)
         {
             try
             {
                 if (contentFrame == null) throw new ArgumentNullException(nameof(contentFrame));
-                else if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-                viewModel.DataParameter = dataParameter;
-                var dictContainsKey = viewModelsToView.ContainsKey(viewModel.GetType());
-                if (!dictContainsKey) throw new ArgumentException($"Passed viewModel's type was not implemented: {viewModel.GetType().Name}");
-                var breadcrumbItem = new BreadcrumbBarDataItem(viewModel);
-                BreadcrumbItems.Add(breadcrumbItem);
-                if (!contentFrame.Navigate(viewModelsToView[viewModel.GetType()])) throw new Exception("Unable to navigate.");
-                if (contentFrame.Content is Page page)
-                {
-                    page.DataContext = viewModel;
-                }
+                else if (viewModelType == null) throw new ArgumentNullException(nameof(viewModelType));
+                if (!serviceLocator.TryGetViewType(viewModelType, out var viewType)) 
+                    throw new NotSupportedException($"ViewModel type {viewModelType.Name} is not supported.");
+                if (BreadcrumbItems.LastOrDefault()?.AssociatedPage != null)
+                    if (!ClosePage(BreadcrumbItems.Last().AssociatedPage)) return;
+                contentFrame.Navigate(viewType, dataParameter);
+                var pageViewModel = (contentFrame.Content as Page)?.DataContext as IPageViewModel;
+                if (pageViewModel == null) throw new ArgumentNullException(nameof(pageViewModel));
+                pageViewModel.DataParameter = dataParameter;
+                var breadcrumbItem = new BreadcrumbBarDataItem(pageViewModel);
+                eventAggregator.InvokeActionOnUIThread(() => BreadcrumbItems.Add(breadcrumbItem));
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }
         }
-        public void NavigateToPrevious(IPageViewModel viewModel, IViewModelDataParameter? dataParameter = null)
+        public void NavigateToPrevious(Type viewModelType, IViewModelDataParameter? dataParameter = null)
         {
             try
             {
                 if (contentFrame == null) throw new ArgumentNullException(nameof(contentFrame));
-                else if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+                else if (viewModelType == null) throw new ArgumentNullException(nameof(viewModelType));
                 var item = BreadcrumbItems.FirstOrDefault(x =>
-                    x.AssociatedPage?.Equals(viewModel) == true
+                    x.AssociatedPage?.GetType() == viewModelType
                     && (x.AssociatedPage.DataParameter == null || x.AssociatedPage.DataParameter.Equals(dataParameter)));
                 if (item == null) throw new ArgumentNullException(nameof(item));
                 NavigateToPrevious(item);
@@ -81,26 +86,23 @@ namespace ShareLingo.WinUI.View
             try
             {
                 if (BreadcrumbItems.Contains(item) != true) return;
-                if (contentFrame == null) throw new ArgumentNullException(nameof(contentFrame));
-                var viewModel = item.AssociatedPage;
-                if (viewModel == null) throw new ArgumentNullException(nameof(viewModel));
-                var dictContainsKey = viewModelsToView.ContainsKey(viewModel.GetType());
-                if (!dictContainsKey) throw new ArgumentException($"Passed viewModel's type was not implemented: {viewModel.GetType().Name}");
                 var itemIndex = BreadcrumbItems.IndexOf(item);
-                var itemsToClose = BreadcrumbItems.Skip(itemIndex + 1).Reverse().ToArray();
+                var itemsToClose = BreadcrumbItems.Skip(Math.Max(1, itemIndex)).Reverse().ToArray();
                 foreach (var itemToDispose in itemsToClose)
                 {
                     if (!ClosePage(itemToDispose.AssociatedPage)) break;
                     BreadcrumbItems.Remove(itemToDispose);
-                }                
-                if (!contentFrame.Navigate(viewModelsToView[viewModel.GetType()])) throw new Exception("Unable to navigate.");
-                if (contentFrame.Content is Page page)
-                {
-                    page.DataContext = viewModel;
                 }
-
+                var viewModelType = BreadcrumbItems.Last().AssociatedPage.GetType();
+                var dataParameter = BreadcrumbItems.Last().AssociatedPage.DataParameter;
+                if (!serviceLocator.TryGetViewType(viewModelType, out var viewType))
+                    throw new NotSupportedException($"ViewModel type {viewModelType.Name} is not supported.");
+                contentFrame.Navigate(viewType, dataParameter);
+                var pageViewModel = (contentFrame.Content as Page)?.DataContext as IPageViewModel;
+                if (pageViewModel == null) throw new ArgumentNullException(nameof(pageViewModel));
+                pageViewModel.DataParameter = BreadcrumbItems.Last().AssociatedPage.DataParameter;
             }
-            catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }            
+            catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }
         }
         public bool ClosePage(IPageViewModel viewModel)
         {
@@ -114,14 +116,12 @@ namespace ShareLingo.WinUI.View
         }
         #endregion
 
-        #region Properties
-        #endregion
-
         #region Handlers
         private void nvSample_Loaded(object sender, RoutedEventArgs e)
         {
-            nvSample.SelectedItem = HomeMenuItem;
-            //var courseBrowserViewModel = new 
+            var msgMng = App.Current.Services.GetService<IMessageManager>() as ContentDialogHost;
+            if (msgMng != null) msgMng.XamlRoot = this.Content.XamlRoot;
+            OnPageNavigationRequestReceived(new PageNavigationRequest(typeof(CourseBrowserViewModel), NavigationRequestAction.GoNext));
         }
         private void BreadcrumbBar_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
@@ -131,12 +131,10 @@ namespace ShareLingo.WinUI.View
         private void OnPageNavigationRequestReceived(PageNavigationRequest request)
         {
             if (request == null) return;
-            var viewModel = App.Current.Services.GetService(request.ViewModelType) as IPageViewModel;
-            if (viewModel == null) return;
             switch (request.Action)
             {
-                case NavigationRequestAction.GoNext: NavigateToNext(viewModel, request.DataParameter); break;
-                case NavigationRequestAction.GoBack: NavigateToPrevious(viewModel, request.DataParameter); break;
+                case NavigationRequestAction.GoNext: NavigateToNext(request.ViewModelType, request.DataParameter); break;
+                case NavigationRequestAction.GoBack: NavigateToPrevious(request.ViewModelType, request.DataParameter); break;
                 case NavigationRequestAction.ToRoot:
                     break;
                 default:
@@ -144,18 +142,5 @@ namespace ShareLingo.WinUI.View
             }
         }
         #endregion
-
-        private void nvSample_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-        {
-            var item = args.SelectedItemContainer;
-            if (item.Tag is not PageSource source) return;
-            var request = source.ToRequest(NavigationRequestAction.GoNext);
-            OnPageNavigationRequestReceived(request);
-        }
-        private void RootGrid_Loaded(object sender, RoutedEventArgs e)
-        {
-            var contentManager = App.Current.Services.GetService<IContentManager>() as ContentManager;
-            if (contentManager != null) contentManager.MainWindowXamlRoot = RootGrid.XamlRoot;
-        }
     }
 }

@@ -8,11 +8,11 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="70bae401-8cbc-45a7-9d02-22943864738c"
+    Name="93c6a91d-e6dc-4565-b0aa-4fab2a2b4d13"
     Publisher="CN=konst"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="70bae401-8cbc-45a7-9d02-22943864738c" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="93c6a91d-e6dc-4565-b0aa-4fab2a2b4d13" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ShareLingo.WinUI</DisplayName>

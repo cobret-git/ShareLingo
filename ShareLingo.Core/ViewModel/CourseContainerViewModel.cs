@@ -1,9 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using NetForge.Core;
 using ShareLingo.Core.Model;
 
 namespace ShareLingo.Core.ViewModel
 {
-    public class CourseContainerViewModel : ObservableObject, IDisposable
+    public class CourseContainerViewModel : ObservableObject, IDisposable, IViewModelDataParameter, ICloneable<CourseContainerViewModel>, IMergable<CourseContainerViewModel>
     {
         #region Constructors
         public CourseContainerViewModel(CourseContainer item)
@@ -19,6 +20,21 @@ namespace ShareLingo.Core.ViewModel
         #endregion
 
         #region Methods
+        public CourseContainerViewModel Clone()
+        {
+            return new CourseContainerViewModel(Item.Clone())
+            {
+                Cover = Cover?.Clone(),
+                Description = Description?.Clone()
+            };
+        }
+        public void Merge(CourseContainerViewModel other)
+        {
+            if (other == null) throw new ArgumentNullException(nameof(other));
+            Item.Merge(other.Item);
+            if (other.Cover != null) Cover?.Merge(other.Cover);
+            if (other.Description != null) Description?.Merge(other.Description);
+        }
         public void Dispose()
         {
             if (Cover != null) Cover.Dispose();

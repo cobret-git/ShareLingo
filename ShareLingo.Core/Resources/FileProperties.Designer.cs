@@ -61,11 +61,20 @@ namespace ShareLingo.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG.
         /// </summary>
         internal static string image_dlgFilter {
             get {
                 return ResourceManager.GetString("image_dlgFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Markdown text file (*.md;*.markdown)|*.md;*.markdown.
+        /// </summary>
+        internal static string markdown_dlgFilter {
+            get {
+                return ResourceManager.GetString("markdown_dlgFilter", resourceCulture);
             }
         }
     }

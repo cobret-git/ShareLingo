@@ -1,10 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using NetForge.Core;
+using NetForge.WinUI;
+using ShareLingo.Core.Services;
+using ShareLingo.Core.ViewModel;
 using ShareLingo.WinUI.Services;
 using ShareLingo.WinUI.View;
-using ShareLingo.WinUI.ViewModel;
 using System;
+using System.IO.Abstractions;
 
 namespace ShareLingo.WinUI
 {
@@ -13,9 +16,7 @@ namespace ShareLingo.WinUI
         public App()
         {
             Services = ConfigureServices();
-
-            _ = Services.GetService<ILoggerManager>(); //init service for handling logs
-
+            Services.GetService<IDataManager>()?.Open();
             this.InitializeComponent();
         }
 
@@ -39,20 +40,19 @@ namespace ShareLingo.WinUI
             var services = new ServiceCollection();
 
             services.AddSingleton<IEventAggregator, EventAggregator>();
-            services.AddSingleton<IBuildInfoManager, BuildInfoManager>();
-            services.AddSingleton<ILoggerManager, LoggerManager>();
-            services.AddSingleton<IMediaManager, MediaManager>();
-            services.AddSingleton<IDataManager, DataManager>();
-            services.AddSingleton<IContentManager, ContentManager>();
+            services.AddSingleton<IFileSystem, FileSystem>();
+            services.AddSingleton<IBuildInfoManager, BuildManager>();
+            services.AddSingleton<IDataManager, LiteDbManager>();
+            services.AddSingleton<IServiceLocator, ShareLingoServiceLocator>();
+            services.AddSingleton<IMessageManager, ContentDialogHost>();
 
             services.AddTransient<CourseBrowserViewModel>();
-            services.AddTransient<CourseInspectorViewModel>();
+            services.AddTransient<CourseEditorViewModel>();
+            services.AddTransient<CourseViewerViewModel>();
 
             return services.BuildServiceProvider();
         }
 
-
-
-        private Window m_window;
+        private Window? m_window;
     }
 }

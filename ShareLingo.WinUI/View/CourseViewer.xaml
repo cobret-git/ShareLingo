@@ -6,10 +6,76 @@
     xmlns:local="using:ShareLingo.WinUI.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:ShareLingo.Core.ViewModel"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    d:DataContext="{d:DesignInstance vm:CourseViewerViewModel, IsDesignTimeCreatable=False}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Width="200" Height="200" CornerRadius="7" BorderThickness="1"
+                        Background="{StaticResource AcrylicBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{StaticResource ControlStrokeColorDefaultBrush}">
+                    <Viewbox Width="64">
+                        <SymbolIcon Symbol="Document" Opacity="0.5"/>
+                    </Viewbox>
+                </Border>
+                <Grid Grid.Column="1" Margin="16,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource TitleLargeTextBlockStyle}"
+                               Text="{Binding Course.Item.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Grid.Row="1" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,6,0,0" Opacity="0.5"
+                               Text="{Binding Course.Item.Author, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Grid.Row="2" Style="{StaticResource BodyStrongTextBlockStyle}" Margin="0,6,0,0" Opacity="0.5"
+                               Text="{Binding Course.Item.Year, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <StackPanel Grid.Row="3" Margin="0,6,0,0" Orientation="Horizontal" HorizontalAlignment="Left">
+                        <DropDownButton>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xECC8;" FontFamily="Segoe MDL2 Assets" FontSize="22" VerticalAlignment="Center" FontWeight="Medium"/>
+                                <TextBlock Text="Module" VerticalAlignment="Center" FontSize="16" Margin="4,0,0,0" FontWeight="Medium"/>
+                            </StackPanel>
+                            <DropDownButton.Flyout>
+                                <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                    <MenuFlyoutItem Text="Create"/>
+                                    <MenuFlyoutItem Text="Import"/>
+                                </MenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                        <Button Margin="6,0,0,0" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent">
+                            <Viewbox Width="18">
+                                <SymbolIcon Symbol="Edit"/>
+                            </Viewbox>
+                        </Button>
+                        <Button Margin="0,0,0,0" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent">
+                            <Viewbox Width="18">
+                                <SymbolIcon Symbol="Share"/>
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="0,16,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Style="{StaticResource SubtitleTextBlockStyle}" Text="Your modules"/>
+            
+        </Grid>
     </Grid>
 </Page>

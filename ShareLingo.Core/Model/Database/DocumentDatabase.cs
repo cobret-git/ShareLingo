@@ -1,8 +1,4 @@
 ﻿using LiteDB;
-using ShareLingo.Core.Model.Database.Component;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ShareLingo.Core.Model.Database
 {
@@ -136,7 +132,7 @@ namespace ShareLingo.Core.Model.Database
         {
             if (connection == null) throw new ArgumentException("Connection must be opened.");
             var relatedModules = GetModulesTo(course.Id, 0, int.MaxValue);
-            foreach(var relatedModule in relatedModules) DeleteModuleCascadeHelper(connection, relatedModule);
+            foreach (var relatedModule in relatedModules) DeleteModuleCascadeHelper(connection, relatedModule);
             connection.GetCollection<ModuleItem>(ModuleItem.COLLECTION_NAME).Include(x => x.Course).DeleteMany(x => x.Course.Id == course.Id);
             var deleted = connection.GetCollection<CourseContainer>(CourseContainer.COLLECTION_NAME).Delete(course.Id);
             if (!deleted) throw new InvalidOperationException("The entity wasn't deleted.");

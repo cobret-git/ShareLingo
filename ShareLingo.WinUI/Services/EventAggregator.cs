@@ -1,6 +1,10 @@
-﻿using Microsoft.UI.Dispatching;
-using NetForge.Core;
+﻿using NetForge.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Windows.System;
 
 namespace ShareLingo.WinUI.Services
 {
@@ -8,7 +12,24 @@ namespace ShareLingo.WinUI.Services
     {
         public override void InvokeActionOnUIThread(Action action)
         {
-            DispatcherQueue.GetForCurrentThread().TryEnqueue(action.Invoke);
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            var dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            if (dispatcherQueue != null)
+            {
+                if (!dispatcherQueue.HasThreadAccess)
+                {
+                    dispatcherQueue.TryEnqueue(() => action());
+                }
+                else
+                {
+                    action();
+                }
+            }
+            else
+            {
+                action();
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using NetForge.Core;
 using ShareLingo.Core.Model;
 
 namespace ShareLingo.Core.ViewModel
 {
-    public class ModuleItemViewModel : ObservableObject, IDisposable
+    public class ModuleItemViewModel : ObservableObject, IDisposable, IViewModelDataParameter
     {
         #region Constructors
         public ModuleItemViewModel(ModuleItem item, CourseContainerViewModel course)

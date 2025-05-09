@@ -61,6 +61,114 @@ namespace ShareLingo.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string courseBrowser_cancelButtonText {
+            get {
+                return ResourceManager.GetString("courseBrowser_cancelButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Course browser.
+        /// </summary>
+        public static string courseBrowser_header {
+            get {
+                return ResourceManager.GetString("courseBrowser_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string courseBrowser_saveButtonText {
+            get {
+                return ResourceManager.GetString("courseBrowser_saveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Author.
+        /// </summary>
+        public static string courseEditor_courseAuthorHeader {
+            get {
+                return ResourceManager.GetString("courseEditor_courseAuthorHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cover.
+        /// </summary>
+        public static string courseEditor_courseCoverHeader {
+            get {
+                return ResourceManager.GetString("courseEditor_courseCoverHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document.
+        /// </summary>
+        public static string courseEditor_courseDocumentHeader {
+            get {
+                return ResourceManager.GetString("courseEditor_courseDocumentHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreign.
+        /// </summary>
+        public static string courseEditor_courseForeignLanguageHeader {
+            get {
+                return ResourceManager.GetString("courseEditor_courseForeignLanguageHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string courseEditor_courseNameHeader {
+            get {
+                return ResourceManager.GetString("courseEditor_courseNameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Native language.
+        /// </summary>
+        public static string courseEditor_courseNativeLanguageHeader {
+            get {
+                return ResourceManager.GetString("courseEditor_courseNativeLanguageHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The course&apos;s author must be specified..
+        /// </summary>
+        public static string courseEditor_error_emptyAuthorName {
+            get {
+                return ResourceManager.GetString("courseEditor_error_emptyAuthorName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The course&apos;s name cannot be empty..
+        /// </summary>
+        public static string courseEditor_error_emptyCourseName {
+            get {
+                return ResourceManager.GetString("courseEditor_error_emptyCourseName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Course editor.
+        /// </summary>
+        public static string courseEditor_header {
+            get {
+                return ResourceManager.GetString("courseEditor_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to _.
         /// </summary>
         public static string courseNameValidator_nameCannotBeEmpty {
@@ -75,6 +183,60 @@ namespace ShareLingo.Core.Resources {
         public static string courseNameValidator_nameCannotContainIncorrectSymbols {
             get {
                 return ResourceManager.GetString("courseNameValidator_nameCannotContainIncorrectSymbols", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unhandled error at canceling course changes..
+        /// </summary>
+        public static string log_error_courseEditor_cancelFailedUnhandled {
+            get {
+                return ResourceManager.GetString("log_error_courseEditor_cancelFailedUnhandled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unhandled error at deleting cover..
+        /// </summary>
+        public static string log_error_courseEditor_deleteCoverFailed {
+            get {
+                return ResourceManager.GetString("log_error_courseEditor_deleteCoverFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unhandled error at deleting document..
+        /// </summary>
+        public static string log_error_courseEditor_deleteDocumentFailed {
+            get {
+                return ResourceManager.GetString("log_error_courseEditor_deleteDocumentFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unhandled error at importing cover..
+        /// </summary>
+        public static string log_error_courseEditor_importCoverFailed {
+            get {
+                return ResourceManager.GetString("log_error_courseEditor_importCoverFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unhandled error at importing document..
+        /// </summary>
+        public static string log_error_courseEditor_importDocumentFailed {
+            get {
+                return ResourceManager.GetString("log_error_courseEditor_importDocumentFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unhandled error at saving course..
+        /// </summary>
+        public static string log_error_courseEditor_saveFailedUnhandled {
+            get {
+                return ResourceManager.GetString("log_error_courseEditor_saveFailedUnhandled", resourceCulture);
             }
         }
         

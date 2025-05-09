@@ -10,7 +10,7 @@ namespace ShareLingo.Core.Services
         #region Fields
         private readonly IFileSystem fileSystem;
         private readonly string filePath;
-        private readonly string password = string.Empty;
+        private readonly string password = "_";
         private LiteDatabase? connection;
         #endregion
 
@@ -51,6 +51,7 @@ namespace ShareLingo.Core.Services
                     fs.Download(item.DescriptionDocumentId, memStream);
                     course.Description = new AttachedFileViewModel(item.DescriptionDocumentId, memStream);
                 }
+                result.Add(course);
             }
             return result.ToArray();
         }

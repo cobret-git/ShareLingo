@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="image_dlgFilter" xml:space="preserve">
-    <value />
+    <value>Image Files(*.BMP;*.JPG;*.PNG)|*.BMP;*.JPG;*.PNG</value>
+  </data>
+  <data name="markdown_dlgFilter" xml:space="preserve">
+    <value>Markdown text file (*.md;*.markdown)|*.md;*.markdown</value>
   </data>
 </root>
