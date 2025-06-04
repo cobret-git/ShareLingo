@@ -114,7 +114,7 @@ namespace ShareLingo.Core.ViewModel
                 InfoBarOpened = false;
                 originModule.Merge(Module);
                 dataManager.SaveModuleData(originModule);
-                var closeRequest = new PageNavigationRequest(typeof(CourseEditorViewModel), NavigationRequestAction.GoBack, originModule);
+                var closeRequest = new PageNavigationRequest(typeof(CourseEditorViewModel), NavigationAction.Back, originModule);
                 eventAggregator.Publish(closeRequest);
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Fatal(ex, CONTENT.log_error_courseEditor_saveFailedUnhandled)); }
@@ -123,7 +123,7 @@ namespace ShareLingo.Core.ViewModel
         {
             try
             {
-                var closeRequest = new PageNavigationRequest(typeof(CourseEditorViewModel), NavigationRequestAction.GoBack, originModule);
+                var closeRequest = new PageNavigationRequest(typeof(CourseEditorViewModel), NavigationAction.Back, originModule);
                 eventAggregator.Publish(closeRequest);
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Error(ex, CONTENT.log_error_courseEditor_cancelFailedUnhandled)); }

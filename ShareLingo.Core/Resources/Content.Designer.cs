@@ -61,6 +61,15 @@ namespace ShareLingo.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Courses.
+        /// </summary>
+        public static string courseBrowser_addCoursesLabel {
+            get {
+                return ResourceManager.GetString("courseBrowser_addCoursesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string courseBrowser_cancelButtonText {
@@ -70,11 +79,56 @@ namespace ShareLingo.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Course.
+        /// </summary>
+        public static string courseBrowser_createCourseButtonText {
+            get {
+                return ResourceManager.GetString("courseBrowser_createCourseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Course browser.
         /// </summary>
         public static string courseBrowser_header {
             get {
                 return ResourceManager.GetString("courseBrowser_header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Course.
+        /// </summary>
+        public static string courseBrowser_importCourseButtonText {
+            get {
+                return ResourceManager.GetString("courseBrowser_importCourseButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import a course.
+        /// </summary>
+        public static string courseBrowser_importCourseLabel {
+            get {
+                return ResourceManager.GetString("courseBrowser_importCourseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import a course from a file or another platform..
+        /// </summary>
+        public static string courseBrowser_importCourseSubLabel {
+            get {
+                return ResourceManager.GetString("courseBrowser_importCourseSubLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Courses.
+        /// </summary>
+        public static string courseBrowser_myCoursesLabel {
+            get {
+                return ResourceManager.GetString("courseBrowser_myCoursesLabel", resourceCulture);
             }
         }
         
@@ -160,7 +214,7 @@ namespace ShareLingo.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Course editor.
+        ///   Looks up a localized string similar to Edit Ccourse.
         /// </summary>
         public static string courseEditor_header {
             get {
@@ -259,11 +313,47 @@ namespace ShareLingo.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home.
+        ///   Looks up a localized string similar to Library.
         /// </summary>
         public static string mainWindow_courseBrowserNavigationMenuItem {
             get {
                 return ResourceManager.GetString("mainWindow_courseBrowserNavigationMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string mainWindow_darkThemeButtonText {
+            get {
+                return ResourceManager.GetString("mainWindow_darkThemeButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string mainWindow_homeNavigationMenuItem {
+            get {
+                return ResourceManager.GetString("mainWindow_homeNavigationMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string mainWindow_lightThemeButtonText {
+            get {
+                return ResourceManager.GetString("mainWindow_lightThemeButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Store.
+        /// </summary>
+        public static string mainWindow_storeNavigationMenuItem {
+            get {
+                return ResourceManager.GetString("mainWindow_storeNavigationMenuItem", resourceCulture);
             }
         }
         

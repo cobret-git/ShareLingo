@@ -1,0 +1,22 @@
+﻿<Application x:Class="ShareLingo.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ShareLingo.WPF"
+             xmlns:conv="clr-namespace:ShareLingo.WPF.Components.Converters"
+             StartupUri="View\MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/Themes/DarkTheme.xaml" />
+                <ResourceDictionary Source="Assets/Styles/Brushes.xaml" />
+                <ResourceDictionary Source="Assets/Styles/Icons.xaml" />
+                <ResourceDictionary Source="Assets/Styles/Controls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <conv:BooleanToInverseVisibilityConverter x:Key="BooleanToInverseVisibilityConverter" />
+            <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <conv:BooleanToOrientationConverter x:Key="BooleanToOrientationConverter" />
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

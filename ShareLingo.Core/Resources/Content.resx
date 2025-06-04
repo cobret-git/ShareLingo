@@ -151,7 +151,7 @@
     <value>The course's name cannot be empty.</value>
   </data>
   <data name="courseEditor_header" xml:space="preserve">
-    <value>Course editor</value>
+    <value>Edit Ccourse</value>
   </data>
   <data name="courseNameValidator_nameCannotBeEmpty" xml:space="preserve">
     <value>_</value>
@@ -178,7 +178,7 @@
     <value>An unhandled error at saving course.</value>
   </data>
   <data name="mainWindow_courseBrowserNavigationMenuItem" xml:space="preserve">
-    <value>Home</value>
+    <value>Library</value>
   </data>
   <data name="moduleEditor_coverHintText" xml:space="preserve">
     <value>Your module’s image is the first thing learners see—it should help them instantly feel what the module is about. Choose a picture that’s simple, relevant, and visually easy to recognize, even at a small size.</value>
@@ -287,5 +287,35 @@ Avoid:
 🚫 Descriptions that are too vague (e.g., "This is a lesson about food.")
 🚫 Overly long explanations or grammar-heavy text
 🚫 Forgetting to say what the learner will gain</value>
+  </data>
+  <data name="mainWindow_darkThemeButtonText" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="mainWindow_lightThemeButtonText" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="courseBrowser_myCoursesLabel" xml:space="preserve">
+    <value>My Courses</value>
+  </data>
+  <data name="courseBrowser_addCoursesLabel" xml:space="preserve">
+    <value>Add Courses</value>
+  </data>
+  <data name="courseBrowser_importCourseLabel" xml:space="preserve">
+    <value>Import a course</value>
+  </data>
+  <data name="courseBrowser_importCourseSubLabel" xml:space="preserve">
+    <value>Import a course from a file or another platform.</value>
+  </data>
+  <data name="courseBrowser_importCourseButtonText" xml:space="preserve">
+    <value>Import Course</value>
+  </data>
+  <data name="courseBrowser_createCourseButtonText" xml:space="preserve">
+    <value>Create Course</value>
+  </data>
+  <data name="mainWindow_storeNavigationMenuItem" xml:space="preserve">
+    <value>Store</value>
+  </data>
+  <data name="mainWindow_homeNavigationMenuItem" xml:space="preserve">
+    <value>Home</value>
   </data>
 </root>

@@ -1,0 +1,169 @@
+﻿<Window x:Class="ShareLingo.WPF.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ShareLingo.WPF"
+        xmlns:vm="clr-namespace:ShareLingo.Core.ViewModel;assembly=ShareLingo.Core"
+        xmlns:str="clr-namespace:ShareLingo.Core.Resources;assembly=ShareLingo.Core"
+        mc:Ignorable="d" d:Height="450" d:Width="800"
+        
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResize"
+        StateChanged="Window_StateChanged"
+        LocationChanged="Window_LocationChanged"
+        Background="Transparent"
+        d:DataContext="{d:DesignInstance vm:MainViewModel, IsDesignTimeCreatable=False}">
+    <Window.Resources>
+        <!-- Window Control Button Style -->
+        <Style x:Key="WindowControlButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#404040"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#505050"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Close Button Style -->
+        <Style x:Key="CloseButton" TargetType="Button" BasedOn="{StaticResource WindowControlButton}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E81123"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#F1707A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <!-- Main Window Border with Drop Shadow -->
+    <Border Background="{DynamicResource BgColorDefaultBrush}" BorderThickness="1" CornerRadius="6" BorderBrush="{DynamicResource BorderColorDefaultBrush}">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="15" ShadowDepth="5" Opacity="0.5"/>
+        </Border.Effect>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="46"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="190"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--header-->
+            <Border Grid.Row="0" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" CornerRadius="6,6,0,0"
+                    Background="{DynamicResource BgColorInsetBrush}" BorderBrush="{DynamicResource BorderColorDefaultBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/> <!-- Icon -->
+                        <ColumnDefinition Width="*"/> <!-- Title -->
+                        <ColumnDefinition Width="135"/> <!-- Window Controls -->
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Column="1" Style="{StaticResource ApplicationTitleTextBlockStyle}" Text="ShareLingo"/>
+
+                    <!-- Window Controls -->
+                    <Grid Grid.Column="3" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="MinimizeButton" Grid.Column="0" 
+                           Style="{StaticResource WindowControlButton}"
+                           Content="&#xE949;" Click="MinimizeButton_Click"/>
+
+                        <Button x:Name="MaximizeButton" Grid.Column="1" 
+                           Style="{StaticResource WindowControlButton}"
+                           Content="&#xE739;" Click="MaximizeButton_Click"/>
+
+                        <Button x:Name="CloseButton" Grid.Column="2" 
+                           Style="{StaticResource CloseButton}"
+                           Content="&#xE106;" Click="CloseButton_Click"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!--sidebar-->
+            <Border Grid.Column="0" Grid.Row="1" Background="Transparent" Padding="10,20">
+                <ScrollViewer Background="Transparent" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
+                        <ToggleButton Style="{StaticResource SidebarNavigationButtonStyle}"
+                                      Command="{Binding NavigateToCommand}" CommandParameter="{x:Static vm:NavigationVariant.Home}"
+                                      IsChecked="{Binding IsHomePageNavigated, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel Orientation="Horizontal">
+                                <ContentControl Style="{StaticResource SidebarNavigationIconStyle}" Template="{StaticResource HomeIcon}"/>
+                                <TextBlock Style="{StaticResource SidebarNavigationTextBlockStyle}"
+                                           Text="{x:Static str:Content.mainWindow_homeNavigationMenuItem}"/>
+                            </StackPanel>
+                        </ToggleButton>
+                        <ToggleButton Style="{StaticResource SidebarNavigationButtonStyle}"
+                                      Command="{Binding NavigateToCommand}" CommandParameter="{x:Static vm:NavigationVariant.Library}"
+                                      IsChecked="{Binding IsLibraryPageNavigated, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel Orientation="Horizontal">
+                                <ContentControl Style="{StaticResource SidebarNavigationIconStyle}" Template="{StaticResource LibraryBooksIcon}"/>
+                                <TextBlock Style="{StaticResource SidebarNavigationTextBlockStyle}" 
+                                           Text="{x:Static str:Content.mainWindow_courseBrowserNavigationMenuItem}"/>
+                            </StackPanel>
+                        </ToggleButton>
+                        <ToggleButton Style="{StaticResource SidebarNavigationButtonStyle}"
+                                      Command="{Binding NavigateToCommand}" CommandParameter="{x:Static vm:NavigationVariant.Store}"
+                                      IsChecked="{Binding IsStorePageNavigated, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel Orientation="Horizontal">
+                                <ContentControl Style="{StaticResource SidebarNavigationIconStyle}" Template="{StaticResource ShoppingBagIcon}"/>
+                                <TextBlock Style="{StaticResource SidebarNavigationTextBlockStyle}" 
+                                           Text="{x:Static str:Content.mainWindow_storeNavigationMenuItem}"/>
+                            </StackPanel>
+                        </ToggleButton>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- Main Content Area -->
+            <Border Grid.Row="1" Grid.Column="1" Margin="20,0,0,0" Background="Transparent">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <ContentControl x:Name="NavigationContainer" Margin="0,20,0,0"/>
+                </ScrollViewer>
+            </Border>
+
+            <!-- Resize Grips -->
+            <Rectangle x:Name="ResizeGripRight" Fill="Transparent" 
+                      Width="5" HorizontalAlignment="Right" 
+                      Grid.RowSpan="3" Cursor="SizeWE"/>
+            <Rectangle x:Name="ResizeGripBottom" Fill="Transparent" 
+                      Height="5" VerticalAlignment="Bottom" 
+                      Grid.Row="2" Cursor="SizeNS"/>
+            <Rectangle x:Name="ResizeGripBottomRight" Fill="Transparent" 
+                      Width="10" Height="10" 
+                      HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                      Grid.Row="2" Cursor="SizeNWSE"/>
+        </Grid>
+    </Border>
+    
+</Window>

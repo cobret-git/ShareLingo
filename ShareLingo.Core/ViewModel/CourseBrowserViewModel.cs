@@ -36,7 +36,7 @@ namespace ShareLingo.Core.ViewModel
             try
             {
                 var defaultCourse = new CourseContainerViewModel(new CourseContainer());
-                var pageNavigationRequest = new PageNavigationRequest(typeof(CourseEditorViewModel), NavigationRequestAction.GoNext, defaultCourse);
+                var pageNavigationRequest = new PageNavigationRequest(typeof(CourseEditorViewModel), NavigationAction.Forward, defaultCourse);
                 eventAggregator.Publish(pageNavigationRequest);
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }
@@ -46,7 +46,7 @@ namespace ShareLingo.Core.ViewModel
             try
             {
                 if (course == null) throw new ArgumentNullException(nameof(course));
-                var pageNavigationRequest = new PageNavigationRequest(typeof(CourseViewerViewModel), NavigationRequestAction.GoNext, course);
+                var pageNavigationRequest = new PageNavigationRequest(typeof(CourseViewerViewModel), NavigationAction.Forward, course);
                 eventAggregator.Publish(pageNavigationRequest);
             }
             catch (Exception ex) { eventAggregator.Publish(LoggedData.Debug(ex)); }

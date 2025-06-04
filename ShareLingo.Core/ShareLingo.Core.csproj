@@ -9,7 +9,6 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="LiteDB" Version="5.0.21" />
-    <PackageReference Include="NetForge.Core" Version="1.0.7" />
     <PackageReference Include="Serilog" Version="4.2.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="System.IO.Abstractions" Version="21.1.7" />
@@ -58,7 +57,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Components\" />
     <Folder Include="EventArgs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NetForge\NetForge.Core\NetForge.Core.csproj" />
   </ItemGroup>
 
 </Project>

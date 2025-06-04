@@ -9,7 +9,7 @@ namespace ShareLingo.Core.Services
         Version Version { get; }
         IFileSystem FileSystem { get; }
         IFilePicker FilePicker { get; }
-
+        ThemeVariant Theme { get; }
         /// <summary>
         /// The path to the database file.
         /// </summary>
@@ -19,6 +19,12 @@ namespace ShareLingo.Core.Services
 
         #region Methods
         bool IsDebug();
+        void ApplyTheme(ThemeVariant theme);
         #endregion
+    }
+    public enum ThemeVariant
+    {
+        Light,
+        Dark
     }
 }
